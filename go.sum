@@ -890,6 +890,8 @@ github.com/libp2p/go-buffer-pool v0.0.2/go.mod h1:MvaB6xw5vOrDl8rYZGLFdKAuk/hRoR
 github.com/lightstep/lightstep-tracer-common/golang/gogo v0.0.0-20190605223551-bc2310a04743/go.mod h1:qklhhLq1aX+mtWk9cPHPzaBjWImj5ULL6C7HFJtXQMM=
 github.com/lightstep/lightstep-tracer-go v0.18.1/go.mod h1:jlF1pusYV4pidLvZ+XD0UBX0ZE6WURAspgAczcDHrL4=
 github.com/linuxkit/virtsock v0.0.0-20201010232012-f8cee7dfc7a3/go.mod h1:3r6x7q95whyfWQpmGZTu3gk3v2YkMi05HEzl7Tf7YEo=
+github.com/lithammer/fuzzysearch v1.1.5 h1:Ag7aKU08wp0R9QCfF4GoGST9HbmAIeLP7xwMrOBEp1c=
+github.com/lithammer/fuzzysearch v1.1.5/go.mod h1:1R1LRNk7yKid1BaQkmuLQaHruxcC4HmAH30Dh61Ih1Q=
 github.com/lucasjones/reggen v0.0.0-20180717132126-cdb49ff09d77/go.mod h1:5ELEyG+X8f+meRWHuqUOewBOhvHkl7M76pdGEansxW4=
 github.com/lyft/protoc-gen-star v0.5.3/go.mod h1:V0xaHgaf5oCCqmcxYcWiDfTiKsZsRc87/1qhoTACD8w=
 github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=

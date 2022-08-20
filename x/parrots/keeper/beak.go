@@ -2,9 +2,11 @@ package keeper
 
 import (
 	"encoding/binary"
+	"errors"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/lithammer/fuzzysearch/fuzzy"
 
 	"parrots/x/parrots/types"
 )
@@ -58,6 +60,23 @@ func (k Keeper) GetSingleBeak(ctx sdk.Context, id uint64) (*types.Beak, error) {
 	}
 
 	return beak, nil
+}
+
+// GetBeaksByNameSubstring fetches beaks object from blockchain.
+func (k Keeper) GetEveryBeakByNameSubstring(ctx sdk.Context, name string) ([]*types.Beak, error) {
+	beaks, err := k.GetEveryBeak(ctx)
+	if err != nil {
+		return nil, errors.New("internal error")
+	}
+
+	var result []*types.Beak
+	for _, beak := range beaks {
+		if fuzzy.Match(name, beak.Name) {
+			result = append(result, beak)
+		}
+	}
+
+	return result, nil
 }
 
 // SetBeakCount sets beak count from blockchain.

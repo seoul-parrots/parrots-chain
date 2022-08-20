@@ -73,6 +73,16 @@ export interface QueryGetBeakByIdResponse {
   beak: Beak | undefined;
 }
 
+export interface QueryGetBeaksByNameSubstringRequest {
+  nameSubstring: string;
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryGetBeaksByNameSubstringResponse {
+  beaks: Beak[];
+  pagination: PageResponse | undefined;
+}
+
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
@@ -1156,6 +1166,195 @@ export const QueryGetBeakByIdResponse = {
   },
 };
 
+const baseQueryGetBeaksByNameSubstringRequest: object = { nameSubstring: "" };
+
+export const QueryGetBeaksByNameSubstringRequest = {
+  encode(
+    message: QueryGetBeaksByNameSubstringRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.nameSubstring !== "") {
+      writer.uint32(10).string(message.nameSubstring);
+    }
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetBeaksByNameSubstringRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetBeaksByNameSubstringRequest,
+    } as QueryGetBeaksByNameSubstringRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nameSubstring = reader.string();
+          break;
+        case 2:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetBeaksByNameSubstringRequest {
+    const message = {
+      ...baseQueryGetBeaksByNameSubstringRequest,
+    } as QueryGetBeaksByNameSubstringRequest;
+    if (object.nameSubstring !== undefined && object.nameSubstring !== null) {
+      message.nameSubstring = String(object.nameSubstring);
+    } else {
+      message.nameSubstring = "";
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetBeaksByNameSubstringRequest): unknown {
+    const obj: any = {};
+    message.nameSubstring !== undefined &&
+      (obj.nameSubstring = message.nameSubstring);
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetBeaksByNameSubstringRequest>
+  ): QueryGetBeaksByNameSubstringRequest {
+    const message = {
+      ...baseQueryGetBeaksByNameSubstringRequest,
+    } as QueryGetBeaksByNameSubstringRequest;
+    if (object.nameSubstring !== undefined && object.nameSubstring !== null) {
+      message.nameSubstring = object.nameSubstring;
+    } else {
+      message.nameSubstring = "";
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetBeaksByNameSubstringResponse: object = {};
+
+export const QueryGetBeaksByNameSubstringResponse = {
+  encode(
+    message: QueryGetBeaksByNameSubstringResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.beaks) {
+      Beak.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetBeaksByNameSubstringResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetBeaksByNameSubstringResponse,
+    } as QueryGetBeaksByNameSubstringResponse;
+    message.beaks = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.beaks.push(Beak.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetBeaksByNameSubstringResponse {
+    const message = {
+      ...baseQueryGetBeaksByNameSubstringResponse,
+    } as QueryGetBeaksByNameSubstringResponse;
+    message.beaks = [];
+    if (object.beaks !== undefined && object.beaks !== null) {
+      for (const e of object.beaks) {
+        message.beaks.push(Beak.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetBeaksByNameSubstringResponse): unknown {
+    const obj: any = {};
+    if (message.beaks) {
+      obj.beaks = message.beaks.map((e) => (e ? Beak.toJSON(e) : undefined));
+    } else {
+      obj.beaks = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetBeaksByNameSubstringResponse>
+  ): QueryGetBeaksByNameSubstringResponse {
+    const message = {
+      ...baseQueryGetBeaksByNameSubstringResponse,
+    } as QueryGetBeaksByNameSubstringResponse;
+    message.beaks = [];
+    if (object.beaks !== undefined && object.beaks !== null) {
+      for (const e of object.beaks) {
+        message.beaks.push(Beak.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -1186,6 +1385,10 @@ export interface Query {
   GetBeakById(
     request: QueryGetBeakByIdRequest
   ): Promise<QueryGetBeakByIdResponse>;
+  /** Queries a list of GetBeaksByNameSubstring items. */
+  GetBeaksByNameSubstring(
+    request: QueryGetBeaksByNameSubstringRequest
+  ): Promise<QueryGetBeaksByNameSubstringResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -1294,6 +1497,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryGetBeakByIdResponse.decode(new Reader(data))
+    );
+  }
+
+  GetBeaksByNameSubstring(
+    request: QueryGetBeaksByNameSubstringRequest
+  ): Promise<QueryGetBeaksByNameSubstringResponse> {
+    const data = QueryGetBeaksByNameSubstringRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "parrots.parrots.Query",
+      "GetBeaksByNameSubstring",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetBeaksByNameSubstringResponse.decode(new Reader(data))
     );
   }
 }

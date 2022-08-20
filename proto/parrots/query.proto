@@ -52,6 +52,11 @@ service Query {
 		option (google.api.http).get = "/parrots/parrots/get_beak_by_id";
 	}
 
+// Queries a list of GetBeaksByNameSubstring items.
+	rpc GetBeaksByNameSubstring(QueryGetBeaksByNameSubstringRequest) returns (QueryGetBeaksByNameSubstringResponse) {
+		option (google.api.http).get = "/parrots/parrots/get_beaks_by_name_substring";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -118,6 +123,16 @@ message QueryGetBeakByIdRequest {
 
 message QueryGetBeakByIdResponse {
   Beak beak = 1;
+}
+
+message QueryGetBeaksByNameSubstringRequest {
+	string nameSubstring = 1;
+	cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryGetBeaksByNameSubstringResponse {
+  repeated Beak beaks = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

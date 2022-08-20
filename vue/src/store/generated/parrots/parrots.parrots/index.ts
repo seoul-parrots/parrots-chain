@@ -51,6 +51,7 @@ const getDefaultState = () => {
 				GetBeaksCount: {},
 				GetAllBeaks: {},
 				GetBeakById: {},
+				GetBeaksByNameSubstring: {},
 				
 				_Structure: {
 						Profile: getStructure(Profile.fromPartial({})),
@@ -131,6 +132,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.GetBeakById[JSON.stringify(params)] ?? {}
+		},
+				getGetBeaksByNameSubstring: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.GetBeaksByNameSubstring[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -357,6 +364,32 @@ export default {
 				return getters['getGetBeakById']( { params: {...key}, query}) ?? {}
 			} catch (e) {
 				throw new Error('QueryClient:QueryGetBeakById API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryGetBeaksByNameSubstring({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryGetBeaksByNameSubstring(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryGetBeaksByNameSubstring({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'GetBeaksByNameSubstring', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryGetBeaksByNameSubstring', payload: { options: { all }, params: {...key},query }})
+				return getters['getGetBeaksByNameSubstring']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryGetBeaksByNameSubstring API Node Unavailable. Could not perform query: ' + e.message)
 				
 			}
 		},
