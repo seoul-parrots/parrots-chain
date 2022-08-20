@@ -9,6 +9,7 @@ option go_package = "parrots/x/parrots/types";
 service Msg {
       rpc SetProfile(MsgSetProfile) returns (MsgSetProfileResponse);
   rpc UploadBeak(MsgUploadBeak) returns (MsgUploadBeakResponse);
+  rpc SendRespect(MsgSendRespect) returns (MsgSendRespectResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -36,6 +37,15 @@ message MsgUploadBeak {
 
 message MsgUploadBeakResponse {
   uint64 id = 1;
+}
+
+message MsgSendRespect {
+  string creator = 1;
+  uint64 beakId = 2;
+}
+
+message MsgSendRespectResponse {
+  uint64 respectCount = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

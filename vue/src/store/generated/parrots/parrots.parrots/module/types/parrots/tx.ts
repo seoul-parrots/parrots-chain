@@ -30,6 +30,15 @@ export interface MsgUploadBeakResponse {
   id: number;
 }
 
+export interface MsgSendRespect {
+  creator: string;
+  beakId: number;
+}
+
+export interface MsgSendRespectResponse {
+  respectCount: number;
+}
+
 const baseMsgSetProfile: object = {
   creator: "",
   username: "",
@@ -477,11 +486,145 @@ export const MsgUploadBeakResponse = {
   },
 };
 
+const baseMsgSendRespect: object = { creator: "", beakId: 0 };
+
+export const MsgSendRespect = {
+  encode(message: MsgSendRespect, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.beakId !== 0) {
+      writer.uint32(16).uint64(message.beakId);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSendRespect {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgSendRespect } as MsgSendRespect;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.beakId = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSendRespect {
+    const message = { ...baseMsgSendRespect } as MsgSendRespect;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.beakId !== undefined && object.beakId !== null) {
+      message.beakId = Number(object.beakId);
+    } else {
+      message.beakId = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSendRespect): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.beakId !== undefined && (obj.beakId = message.beakId);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgSendRespect>): MsgSendRespect {
+    const message = { ...baseMsgSendRespect } as MsgSendRespect;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.beakId !== undefined && object.beakId !== null) {
+      message.beakId = object.beakId;
+    } else {
+      message.beakId = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgSendRespectResponse: object = { respectCount: 0 };
+
+export const MsgSendRespectResponse = {
+  encode(
+    message: MsgSendRespectResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.respectCount !== 0) {
+      writer.uint32(8).uint64(message.respectCount);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSendRespectResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgSendRespectResponse } as MsgSendRespectResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.respectCount = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSendRespectResponse {
+    const message = { ...baseMsgSendRespectResponse } as MsgSendRespectResponse;
+    if (object.respectCount !== undefined && object.respectCount !== null) {
+      message.respectCount = Number(object.respectCount);
+    } else {
+      message.respectCount = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSendRespectResponse): unknown {
+    const obj: any = {};
+    message.respectCount !== undefined &&
+      (obj.respectCount = message.respectCount);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSendRespectResponse>
+  ): MsgSendRespectResponse {
+    const message = { ...baseMsgSendRespectResponse } as MsgSendRespectResponse;
+    if (object.respectCount !== undefined && object.respectCount !== null) {
+      message.respectCount = object.respectCount;
+    } else {
+      message.respectCount = 0;
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   SetProfile(request: MsgSetProfile): Promise<MsgSetProfileResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   UploadBeak(request: MsgUploadBeak): Promise<MsgUploadBeakResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  SendRespect(request: MsgSendRespect): Promise<MsgSendRespectResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -502,6 +645,18 @@ export class MsgClientImpl implements Msg {
     const promise = this.rpc.request("parrots.parrots.Msg", "UploadBeak", data);
     return promise.then((data) =>
       MsgUploadBeakResponse.decode(new Reader(data))
+    );
+  }
+
+  SendRespect(request: MsgSendRespect): Promise<MsgSendRespectResponse> {
+    const data = MsgSendRespect.encode(request).finish();
+    const promise = this.rpc.request(
+      "parrots.parrots.Msg",
+      "SendRespect",
+      data
+    );
+    return promise.then((data) =>
+      MsgSendRespectResponse.decode(new Reader(data))
     );
   }
 }

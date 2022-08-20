@@ -30206,6 +30206,9 @@ paths:
                       type: string
                     license:
                       type: string
+                    respect_count:
+                      type: string
+                      format: uint64
                     linked_beaks:
                       type: array
                       items:
@@ -30307,6 +30310,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /parrots/parrots/get_beak_by_id:
@@ -30337,6 +30350,9 @@ paths:
                     type: string
                   license:
                     type: string
+                  respect_count:
+                    type: string
+                    format: uint64
                   linked_beaks:
                     type: array
                     items:
@@ -30402,6 +30418,9 @@ paths:
                       type: string
                     license:
                       type: string
+                    respect_count:
+                      type: string
+                      format: uint64
                     linked_beaks:
                       type: array
                       items:
@@ -30507,6 +30526,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /parrots/parrots/get_beaks_by_tag:
@@ -30539,6 +30568,9 @@ paths:
                       type: string
                     license:
                       type: string
+                    respect_count:
+                      type: string
+                      format: uint64
                     linked_beaks:
                       type: array
                       items:
@@ -30644,6 +30676,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /parrots/parrots/get_beaks_count:
@@ -30707,6 +30749,7 @@ paths:
                     type: array
                     items:
                       type: string
+                      format: uint64
         default:
           description: An unexpected error response.
           schema:
@@ -30761,6 +30804,7 @@ paths:
                     type: array
                     items:
                       type: string
+                      format: uint64
         default:
           description: An unexpected error response.
           schema:
@@ -30852,6 +30896,7 @@ paths:
                       type: array
                       items:
                         type: string
+                        format: uint64
               pagination:
                 type: object
                 properties:
@@ -30941,6 +30986,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -52379,6 +52434,9 @@ definitions:
         type: string
       license:
         type: string
+      respect_count:
+        type: string
+        format: uint64
       linked_beaks:
         type: array
         items:
@@ -52388,6 +52446,12 @@ definitions:
         type: array
         items:
           type: string
+  parrots.parrots.MsgSendRespectResponse:
+    type: object
+    properties:
+      respectCount:
+        type: string
+        format: uint64
   parrots.parrots.MsgSetProfileResponse:
     type: object
     properties:
@@ -52421,6 +52485,7 @@ definitions:
         type: array
         items:
           type: string
+          format: uint64
   parrots.parrots.QueryGetAllBeaksResponse:
     type: object
     properties:
@@ -52444,6 +52509,9 @@ definitions:
               type: string
             license:
               type: string
+            respect_count:
+              type: string
+              format: uint64
             linked_beaks:
               type: array
               items:
@@ -52499,6 +52567,9 @@ definitions:
             type: string
           license:
             type: string
+          respect_count:
+            type: string
+            format: uint64
           linked_beaks:
             type: array
             items:
@@ -52531,6 +52602,9 @@ definitions:
               type: string
             license:
               type: string
+            respect_count:
+              type: string
+              format: uint64
             linked_beaks:
               type: array
               items:
@@ -52588,6 +52662,9 @@ definitions:
               type: string
             license:
               type: string
+            respect_count:
+              type: string
+              format: uint64
             linked_beaks:
               type: array
               items:
@@ -52649,6 +52726,7 @@ definitions:
             type: array
             items:
               type: string
+              format: uint64
   parrots.parrots.QueryGetProfileResponse:
     type: object
     properties:
@@ -52670,6 +52748,7 @@ definitions:
             type: array
             items:
               type: string
+              format: uint64
   parrots.parrots.QueryGetProfilesResponse:
     type: object
     properties:
@@ -52693,6 +52772,7 @@ definitions:
               type: array
               items:
                 type: string
+                format: uint64
       pagination:
         type: object
         properties:

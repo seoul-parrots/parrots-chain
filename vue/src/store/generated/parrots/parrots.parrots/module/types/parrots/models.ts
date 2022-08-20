@@ -10,7 +10,7 @@ export interface Profile {
   username: string;
   display_name: string;
   description: string;
-  respectedBeaks: string[];
+  respectedBeaks: number[];
 }
 
 export interface Beak {
@@ -21,6 +21,7 @@ export interface Beak {
   creator_username: string;
   description: string;
   license: string;
+  respect_count: number;
   linked_beaks: number[];
   tags: string[];
 }
@@ -31,7 +32,7 @@ const baseProfile: object = {
   username: "",
   display_name: "",
   description: "",
-  respectedBeaks: "",
+  respectedBeaks: 0,
 };
 
 export const Profile = {
@@ -51,9 +52,11 @@ export const Profile = {
     if (message.description !== "") {
       writer.uint32(42).string(message.description);
     }
+    writer.uint32(50).fork();
     for (const v of message.respectedBeaks) {
-      writer.uint32(50).string(v!);
+      writer.uint64(v);
     }
+    writer.ldelim();
     return writer;
   },
 
@@ -81,7 +84,16 @@ export const Profile = {
           message.description = reader.string();
           break;
         case 6:
-          message.respectedBeaks.push(reader.string());
+          if ((tag & 7) === 2) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.respectedBeaks.push(
+                longToNumber(reader.uint64() as Long)
+              );
+            }
+          } else {
+            message.respectedBeaks.push(longToNumber(reader.uint64() as Long));
+          }
           break;
         default:
           reader.skipType(tag & 7);
@@ -121,7 +133,7 @@ export const Profile = {
     }
     if (object.respectedBeaks !== undefined && object.respectedBeaks !== null) {
       for (const e of object.respectedBeaks) {
-        message.respectedBeaks.push(String(e));
+        message.respectedBeaks.push(Number(e));
       }
     }
     return message;
@@ -189,6 +201,7 @@ const baseBeak: object = {
   creator_username: "",
   description: "",
   license: "",
+  respect_count: 0,
   linked_beaks: 0,
   tags: "",
 };
@@ -216,13 +229,16 @@ export const Beak = {
     if (message.license !== "") {
       writer.uint32(58).string(message.license);
     }
-    writer.uint32(66).fork();
+    if (message.respect_count !== 0) {
+      writer.uint32(64).uint64(message.respect_count);
+    }
+    writer.uint32(74).fork();
     for (const v of message.linked_beaks) {
       writer.uint64(v);
     }
     writer.ldelim();
     for (const v of message.tags) {
-      writer.uint32(74).string(v!);
+      writer.uint32(82).string(v!);
     }
     return writer;
   },
@@ -258,6 +274,9 @@ export const Beak = {
           message.license = reader.string();
           break;
         case 8:
+          message.respect_count = longToNumber(reader.uint64() as Long);
+          break;
+        case 9:
           if ((tag & 7) === 2) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
@@ -267,7 +286,7 @@ export const Beak = {
             message.linked_beaks.push(longToNumber(reader.uint64() as Long));
           }
           break;
-        case 9:
+        case 10:
           message.tags.push(reader.string());
           break;
         default:
@@ -320,6 +339,11 @@ export const Beak = {
     } else {
       message.license = "";
     }
+    if (object.respect_count !== undefined && object.respect_count !== null) {
+      message.respect_count = Number(object.respect_count);
+    } else {
+      message.respect_count = 0;
+    }
     if (object.linked_beaks !== undefined && object.linked_beaks !== null) {
       for (const e of object.linked_beaks) {
         message.linked_beaks.push(Number(e));
@@ -344,6 +368,8 @@ export const Beak = {
     message.description !== undefined &&
       (obj.description = message.description);
     message.license !== undefined && (obj.license = message.license);
+    message.respect_count !== undefined &&
+      (obj.respect_count = message.respect_count);
     if (message.linked_beaks) {
       obj.linked_beaks = message.linked_beaks.map((e) => e);
     } else {
@@ -398,6 +424,11 @@ export const Beak = {
       message.license = object.license;
     } else {
       message.license = "";
+    }
+    if (object.respect_count !== undefined && object.respect_count !== null) {
+      message.respect_count = object.respect_count;
+    } else {
+      message.respect_count = 0;
     }
     if (object.linked_beaks !== undefined && object.linked_beaks !== null) {
       for (const e of object.linked_beaks) {

@@ -33,6 +33,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgUploadBeak int = 100
 
+	opWeightMsgSendRespect = "op_weight_msg_send_respect"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgSendRespect int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -87,6 +91,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgUploadBeak,
 		parrotssimulation.SimulateMsgUploadBeak(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgSendRespect int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgSendRespect, &weightMsgSendRespect, nil,
+		func(_ *rand.Rand) {
+			weightMsgSendRespect = defaultWeightMsgSendRespect
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgSendRespect,
+		parrotssimulation.SimulateMsgSendRespect(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

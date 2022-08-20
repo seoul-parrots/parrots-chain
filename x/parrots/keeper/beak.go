@@ -32,6 +32,19 @@ func (k Keeper) AddBeak(ctx sdk.Context, beak types.Beak) uint64 {
 	return count
 }
 
+// UpdateBeak adds beak object to the blockchain.
+func (k Keeper) UpdateBeak(ctx sdk.Context, beak types.Beak) error {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.BeakKey))
+
+	byteKey := make([]byte, 8)
+	binary.BigEndian.PutUint64(byteKey, beak.Id)
+
+	appendedValue := k.cdc.MustMarshal(&beak)
+	store.Set(byteKey, appendedValue)
+
+	return nil
+}
+
 // GetEveryBeak fetches every beak object from blockchain.
 func (k Keeper) GetEveryBeak(ctx sdk.Context) ([]*types.Beak, error) {
 	var beaks []*types.Beak

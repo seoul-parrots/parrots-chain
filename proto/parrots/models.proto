@@ -9,7 +9,7 @@ message Profile {
     string username = 3;
     string display_name = 4;
     string description = 5;
-    repeated string respectedBeaks = 6;
+    repeated uint64 respectedBeaks = 6;
 }
 
 message Beak {
@@ -20,6 +20,7 @@ message Beak {
     string creator_username = 5;
     string description = 6;
     string license = 7;
-    repeated uint64 linked_beaks = 8;
-    repeated string tags = 9;
+    uint64 respect_count = 8;
+    repeated uint64 linked_beaks = 9;
+    repeated string tags = 10;
 }

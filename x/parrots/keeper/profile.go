@@ -29,6 +29,19 @@ func (k Keeper) AddProfile(ctx sdk.Context, profile types.Profile) uint64 {
 	return count
 }
 
+// Update Profile modifies profile object to the blockchain.
+func (k Keeper) UpdateProfile(ctx sdk.Context, profile *types.Profile) error {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.ProfileKey))
+
+	byteKey := make([]byte, 8)
+	binary.BigEndian.PutUint64(byteKey, profile.Id)
+
+	appendedValue := k.cdc.MustMarshal(profile)
+	store.Set(byteKey, appendedValue)
+
+	return nil
+}
+
 // GetEveryProfile fetches every profile object from blockchain.
 func (k Keeper) GetEveryProfile(ctx sdk.Context) ([]*types.Profile, error) {
 	var profiles []*types.Profile
@@ -74,6 +87,21 @@ func (k Keeper) GetSingleProfileByUsername(ctx sdk.Context, username string) (*t
 		}
 	}
 	return nil, errors.New("not found by given username")
+}
+
+// GetSingleProfileByCreator fetches profile object using creator from blockchain.
+func (k Keeper) GetSingleProfileByCreator(ctx sdk.Context, creator string) (*types.Profile, error) {
+	profiles, err := k.GetEveryProfile(ctx)
+	if err != nil {
+		return nil, errors.New("internal error")
+	}
+
+	for _, profile := range profiles {
+		if profile.Creator == creator {
+			return profile, nil
+		}
+	}
+	return nil, errors.New("not found by given creator")
 }
 
 // SetProfileCount sets profile count from blockchain.

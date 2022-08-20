@@ -18,8 +18,16 @@ export interface ParrotsBeak {
   creator_username?: string;
   description?: string;
   license?: string;
+
+  /** @format uint64 */
+  respect_count?: string;
   linked_beaks?: string[];
   tags?: string[];
+}
+
+export interface ParrotsMsgSendRespectResponse {
+  /** @format uint64 */
+  respectCount?: string;
 }
 
 export interface ParrotsMsgSetProfileResponse {

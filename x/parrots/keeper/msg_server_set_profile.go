@@ -16,7 +16,7 @@ func (k msgServer) SetProfile(goCtx context.Context, msg *types.MsgSetProfile) (
 		Username:       msg.Username,
 		DisplayName:    msg.DisplayName,
 		Description:    msg.Description,
-		RespectedBeaks: make([]string, 0),
+		RespectedBeaks: make([]uint64, 0),
 	}
 
 	id := k.AddProfile(ctx, profile)

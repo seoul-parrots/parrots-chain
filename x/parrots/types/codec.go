@@ -10,6 +10,7 @@ import (
 func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgSetProfile{}, "parrots/SetProfile", nil)
 	cdc.RegisterConcrete(&MsgUploadBeak{}, "parrots/UploadBeak", nil)
+	cdc.RegisterConcrete(&MsgSendRespect{}, "parrots/SendRespect", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -19,6 +20,9 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgUploadBeak{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgSendRespect{},
 	)
 	// this line is used by starport scaffolding # 3
 
