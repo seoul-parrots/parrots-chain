@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"encoding/binary"
+	"errors"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -28,6 +29,22 @@ func (k Keeper) AddProfile(ctx sdk.Context, profile types.Profile) uint64 {
 	return count
 }
 
+// GetEveryProfile fetches every profile object from blockchain.
+func (k Keeper) GetEveryProfile(ctx sdk.Context) ([]*types.Profile, error) {
+	var profiles []*types.Profile
+	count := k.GetProfileCount(ctx)
+	for i := uint64(0); i < count; i++ {
+		profile, err := k.GetSingleProfile(ctx, i)
+		if err != nil {
+			return nil, err
+		}
+
+		profiles = append(profiles, profile)
+	}
+
+	return profiles, nil
+}
+
 // GetSingleProfile fetches profile object from blockchain.
 func (k Keeper) GetSingleProfile(ctx sdk.Context, id uint64) (*types.Profile, error) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.ProfileKey))
@@ -42,6 +59,21 @@ func (k Keeper) GetSingleProfile(ctx sdk.Context, id uint64) (*types.Profile, er
 	}
 
 	return profile, nil
+}
+
+// GetSingleProfileByUsername fetches profile object using username from blockchain.
+func (k Keeper) GetSingleProfileByUsername(ctx sdk.Context, username string) (*types.Profile, error) {
+	profiles, err := k.GetEveryProfile(ctx)
+	if err != nil {
+		return nil, errors.New("internal error")
+	}
+
+	for _, profile := range profiles {
+		if profile.Username == username {
+			return profile, nil
+		}
+	}
+	return nil, errors.New("not found by given username")
 }
 
 // SetProfileCount sets profile count from blockchain.
