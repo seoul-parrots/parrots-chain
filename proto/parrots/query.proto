@@ -5,6 +5,8 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "parrots/params.proto";
+import "parrots/models.proto";
+
 // this line is used by starport scaffolding # 1
 
 option go_package = "parrots/x/parrots/types";
@@ -15,7 +17,17 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/parrots/parrots/params";
   }
-  // this line is used by starport scaffolding # 2
+  // Queries a list of Profiles items.
+	rpc Profiles(QueryProfilesRequest) returns (QueryProfilesResponse) {
+		option (google.api.http).get = "/parrots/parrots/profiles";
+	}
+
+// Queries a list of ProfileCount items.
+	rpc ProfileCount(QueryProfileCountRequest) returns (QueryProfileCountResponse) {
+		option (google.api.http).get = "/parrots/parrots/profile_count";
+	}
+
+// this line is used by starport scaffolding # 2
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -25,6 +37,22 @@ message QueryParamsRequest {}
 message QueryParamsResponse {
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryProfilesRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryProfilesResponse {
+  repeated Profile Profile = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryProfileCountRequest {
+}
+
+message QueryProfileCountResponse {
+  uint64 count = 1;
 }
 
 // this line is used by starport scaffolding # 3

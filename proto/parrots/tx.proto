@@ -7,7 +7,19 @@ option go_package = "parrots/x/parrots/types";
 
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+      rpc SetProfile(MsgSetProfile) returns (MsgSetProfileResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgSetProfile {
+  string creator = 1;
+  string username = 2;
+  string displayName = 3;
+  string description = 4;
+}
+
+message MsgSetProfileResponse {
+  uint64 id = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

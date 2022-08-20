@@ -3,15 +3,16 @@ package parrots
 import (
 	"math/rand"
 
+	"parrots/testutil/sample"
+	parrotssimulation "parrots/x/parrots/simulation"
+	"parrots/x/parrots/types"
+
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
-	"parrots/testutil/sample"
-	parrotssimulation "parrots/x/parrots/simulation"
-	"parrots/x/parrots/types"
 )
 
 // avoid unused import issue
@@ -24,7 +25,11 @@ var (
 )
 
 const (
-// this line is used by starport scaffolding # simapp/module/const
+	opWeightMsgSetProfile = "op_weight_msg_set_profile"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgSetProfile int = 100
+
+	// this line is used by starport scaffolding # simapp/module/const
 )
 
 // GenerateGenesisState creates a randomized GenState of the module
@@ -57,6 +62,17 @@ func (am AppModule) RegisterStoreDecoder(_ sdk.StoreDecoderRegistry) {}
 // WeightedOperations returns the all the gov module operations with their respective weights.
 func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
 	operations := make([]simtypes.WeightedOperation, 0)
+
+	var weightMsgSetProfile int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgSetProfile, &weightMsgSetProfile, nil,
+		func(_ *rand.Rand) {
+			weightMsgSetProfile = defaultWeightMsgSetProfile
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgSetProfile,
+		parrotssimulation.SimulateMsgSetProfile(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
 
 	// this line is used by starport scaffolding # simapp/module/operation
 

@@ -1,0 +1,25 @@
+syntax = "proto3";
+package parrots.parrots;
+
+option go_package = "parrots/x/parrots/types";
+
+message Profile {
+    uint64 id = 1;
+    string creator = 2;
+    string username = 3;
+    string display_name = 4;
+    string description = 5;
+    repeated string respectedBeaks = 6;
+}
+
+message Beak {
+    uint64 id = 1;
+    string creator = 2;
+    string file_index = 3;
+    string name = 4;
+    string creator_username = 5;
+    string description = 6;
+    string license = 7;
+    repeated string tags = 8;
+    repeated uint64 linked_beaks = 9;
+}

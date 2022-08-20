@@ -6,7 +6,7 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	_ "github.com/cosmos/cosmos-sdk/types/query"
+	query "github.com/cosmos/cosmos-sdk/types/query"
 	_ "github.com/gogo/protobuf/gogoproto"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
@@ -113,33 +113,224 @@ func (m *QueryParamsResponse) GetParams() Params {
 	return Params{}
 }
 
+type QueryProfilesRequest struct {
+	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryProfilesRequest) Reset()         { *m = QueryProfilesRequest{} }
+func (m *QueryProfilesRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryProfilesRequest) ProtoMessage()    {}
+func (*QueryProfilesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0c9f6f9ef187aba2, []int{2}
+}
+func (m *QueryProfilesRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryProfilesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryProfilesRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryProfilesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryProfilesRequest.Merge(m, src)
+}
+func (m *QueryProfilesRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryProfilesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryProfilesRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryProfilesRequest proto.InternalMessageInfo
+
+func (m *QueryProfilesRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryProfilesResponse struct {
+	Profile    []*Profile          `protobuf:"bytes,1,rep,name=Profile,proto3" json:"Profile,omitempty"`
+	Pagination *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryProfilesResponse) Reset()         { *m = QueryProfilesResponse{} }
+func (m *QueryProfilesResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryProfilesResponse) ProtoMessage()    {}
+func (*QueryProfilesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0c9f6f9ef187aba2, []int{3}
+}
+func (m *QueryProfilesResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryProfilesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryProfilesResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryProfilesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryProfilesResponse.Merge(m, src)
+}
+func (m *QueryProfilesResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryProfilesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryProfilesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryProfilesResponse proto.InternalMessageInfo
+
+func (m *QueryProfilesResponse) GetProfile() []*Profile {
+	if m != nil {
+		return m.Profile
+	}
+	return nil
+}
+
+func (m *QueryProfilesResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryProfileCountRequest struct {
+}
+
+func (m *QueryProfileCountRequest) Reset()         { *m = QueryProfileCountRequest{} }
+func (m *QueryProfileCountRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryProfileCountRequest) ProtoMessage()    {}
+func (*QueryProfileCountRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0c9f6f9ef187aba2, []int{4}
+}
+func (m *QueryProfileCountRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryProfileCountRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryProfileCountRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryProfileCountRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryProfileCountRequest.Merge(m, src)
+}
+func (m *QueryProfileCountRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryProfileCountRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryProfileCountRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryProfileCountRequest proto.InternalMessageInfo
+
+type QueryProfileCountResponse struct {
+	Count uint64 `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
+}
+
+func (m *QueryProfileCountResponse) Reset()         { *m = QueryProfileCountResponse{} }
+func (m *QueryProfileCountResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryProfileCountResponse) ProtoMessage()    {}
+func (*QueryProfileCountResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0c9f6f9ef187aba2, []int{5}
+}
+func (m *QueryProfileCountResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryProfileCountResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryProfileCountResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryProfileCountResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryProfileCountResponse.Merge(m, src)
+}
+func (m *QueryProfileCountResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryProfileCountResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryProfileCountResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryProfileCountResponse proto.InternalMessageInfo
+
+func (m *QueryProfileCountResponse) GetCount() uint64 {
+	if m != nil {
+		return m.Count
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "parrots.parrots.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "parrots.parrots.QueryParamsResponse")
+	proto.RegisterType((*QueryProfilesRequest)(nil), "parrots.parrots.QueryProfilesRequest")
+	proto.RegisterType((*QueryProfilesResponse)(nil), "parrots.parrots.QueryProfilesResponse")
+	proto.RegisterType((*QueryProfileCountRequest)(nil), "parrots.parrots.QueryProfileCountRequest")
+	proto.RegisterType((*QueryProfileCountResponse)(nil), "parrots.parrots.QueryProfileCountResponse")
 }
 
 func init() { proto.RegisterFile("parrots/query.proto", fileDescriptor_0c9f6f9ef187aba2) }
 
 var fileDescriptor_0c9f6f9ef187aba2 = []byte{
-	// 277 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x2e, 0x48, 0x2c, 0x2a,
-	0xca, 0x2f, 0x29, 0xd6, 0x2f, 0x2c, 0x4d, 0x2d, 0xaa, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17,
-	0xe2, 0x87, 0x0a, 0xea, 0x41, 0x69, 0x29, 0x91, 0xf4, 0xfc, 0xf4, 0x7c, 0xb0, 0x9c, 0x3e, 0x88,
-	0x05, 0x51, 0x26, 0x25, 0x93, 0x9e, 0x9f, 0x9f, 0x9e, 0x93, 0xaa, 0x9f, 0x58, 0x90, 0xa9, 0x9f,
-	0x98, 0x97, 0x97, 0x5f, 0x92, 0x58, 0x92, 0x99, 0x9f, 0x57, 0x0c, 0x95, 0xd5, 0x4a, 0xce, 0x2f,
-	0xce, 0xcd, 0x2f, 0xd6, 0x4f, 0x4a, 0x2c, 0x4e, 0x85, 0x98, 0xae, 0x5f, 0x66, 0x98, 0x94, 0x5a,
-	0x92, 0x68, 0xa8, 0x5f, 0x90, 0x98, 0x9e, 0x99, 0x07, 0x56, 0x0c, 0x55, 0x2b, 0x02, 0x73, 0x45,
-	0x41, 0x62, 0x51, 0x62, 0x2e, 0xd4, 0x04, 0x25, 0x11, 0x2e, 0xa1, 0x40, 0x90, 0xbe, 0x00, 0xb0,
-	0x60, 0x50, 0x6a, 0x61, 0x69, 0x6a, 0x71, 0x89, 0x92, 0x0f, 0x97, 0x30, 0x8a, 0x68, 0x71, 0x41,
-	0x7e, 0x5e, 0x71, 0xaa, 0x90, 0x29, 0x17, 0x1b, 0x44, 0xb3, 0x04, 0xa3, 0x02, 0xa3, 0x06, 0xb7,
-	0x91, 0xb8, 0x1e, 0x9a, 0x27, 0xf4, 0x20, 0x1a, 0x9c, 0x58, 0x4e, 0xdc, 0x93, 0x67, 0x08, 0x82,
-	0x2a, 0x36, 0xaa, 0xe5, 0x62, 0x05, 0x9b, 0x26, 0x54, 0xc2, 0xc5, 0x06, 0x51, 0x20, 0xa4, 0x8c,
-	0xa1, 0x13, 0xd3, 0x15, 0x52, 0x2a, 0xf8, 0x15, 0x41, 0x1c, 0xa5, 0x24, 0xdf, 0x74, 0xf9, 0xc9,
-	0x64, 0x26, 0x49, 0x21, 0x71, 0x7d, 0x24, 0x0f, 0x22, 0x79, 0xd4, 0xc9, 0xf0, 0xc4, 0x23, 0x39,
-	0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63,
-	0x39, 0x86, 0x1b, 0x8f, 0xe5, 0x18, 0xa2, 0xc4, 0x61, 0x2a, 0x2b, 0xe0, 0x7a, 0x4a, 0x2a, 0x0b,
-	0x52, 0x8b, 0x93, 0xd8, 0xc0, 0x81, 0x63, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0xc3, 0xe7, 0xc7,
-	0xc8, 0xba, 0x01, 0x00, 0x00,
+	// 462 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0xcf, 0x8b, 0xd3, 0x40,
+	0x14, 0xce, 0xec, 0x8f, 0x2a, 0x6f, 0x05, 0x61, 0x36, 0xd2, 0x34, 0x4a, 0xb6, 0x46, 0xad, 0xeb,
+	0x1e, 0x66, 0x48, 0xc4, 0x7f, 0x60, 0x05, 0xbd, 0x78, 0x58, 0x73, 0xf4, 0xa0, 0x4c, 0xd7, 0x31,
+	0x04, 0xda, 0x4c, 0x36, 0x33, 0x15, 0x17, 0x3c, 0x79, 0x15, 0x41, 0xd0, 0x3f, 0x6a, 0x8f, 0x0b,
+	0x5e, 0x3c, 0x89, 0xb4, 0xfe, 0x21, 0x92, 0x99, 0x89, 0x26, 0x8d, 0x6d, 0x3d, 0x25, 0x79, 0xef,
+	0x7b, 0xdf, 0xf7, 0xbd, 0x6f, 0x26, 0xb0, 0x5f, 0xb0, 0xb2, 0x14, 0x4a, 0xd2, 0xb3, 0x19, 0x2f,
+	0xcf, 0x49, 0x51, 0x0a, 0x25, 0xf0, 0x75, 0x5b, 0x24, 0xf6, 0xe9, 0xbb, 0xa9, 0x48, 0x85, 0xee,
+	0xd1, 0xea, 0xcd, 0xc0, 0xfc, 0x5b, 0xa9, 0x10, 0xe9, 0x84, 0x53, 0x56, 0x64, 0x94, 0xe5, 0xb9,
+	0x50, 0x4c, 0x65, 0x22, 0x97, 0xb6, 0x7b, 0x74, 0x2a, 0xe4, 0x54, 0x48, 0x3a, 0x66, 0x92, 0x1b,
+	0x76, 0xfa, 0x36, 0x1a, 0x73, 0xc5, 0x22, 0x5a, 0xb0, 0x34, 0xcb, 0x35, 0xd8, 0x62, 0xdd, 0xda,
+	0x45, 0xc1, 0x4a, 0x36, 0x95, 0xcb, 0xd5, 0xa9, 0x78, 0xcd, 0x27, 0xb6, 0x1a, 0xba, 0x80, 0x9f,
+	0x57, 0x6c, 0x27, 0x1a, 0x9a, 0xf0, 0xb3, 0x19, 0x97, 0x2a, 0x7c, 0x06, 0xfb, 0xad, 0xaa, 0x2c,
+	0x44, 0x2e, 0x39, 0x7e, 0x04, 0x3d, 0x43, 0xe9, 0xa1, 0x21, 0x3a, 0xdc, 0x8b, 0xfb, 0x64, 0x69,
+	0x35, 0x62, 0x06, 0x8e, 0x77, 0x2e, 0x7e, 0x1c, 0x38, 0x89, 0x05, 0x87, 0x2f, 0xc1, 0x35, 0x6c,
+	0xa5, 0x78, 0x93, 0x4d, 0x78, 0xad, 0x82, 0x9f, 0x00, 0xfc, 0xf5, 0x6e, 0x29, 0x47, 0xc4, 0x2c,
+	0x4a, 0xaa, 0x45, 0x89, 0x89, 0xd1, 0x2e, 0x4a, 0x4e, 0x58, 0xca, 0xed, 0x6c, 0xd2, 0x98, 0x0c,
+	0xbf, 0x22, 0xb8, 0xb1, 0x24, 0x60, 0x0d, 0xc7, 0x70, 0xc5, 0xd6, 0x3c, 0x34, 0xdc, 0x3e, 0xdc,
+	0x8b, 0xbd, 0xae, 0x63, 0xd3, 0x4f, 0x6a, 0x20, 0x7e, 0xda, 0x72, 0xb5, 0xa5, 0x5d, 0xdd, 0xdf,
+	0xe8, 0xca, 0x08, 0xb6, 0x6c, 0xf9, 0xe0, 0x35, 0x5d, 0x3d, 0x16, 0xb3, 0x5c, 0xd5, 0x01, 0x47,
+	0x30, 0xf8, 0x47, 0xcf, 0xba, 0x76, 0x61, 0xf7, 0xb4, 0x2a, 0xe8, 0x48, 0x76, 0x12, 0xf3, 0x11,
+	0x7f, 0xdc, 0x86, 0x5d, 0x3d, 0x83, 0x15, 0xf4, 0x4c, 0xce, 0xf8, 0x4e, 0x67, 0x9d, 0xee, 0x61,
+	0xfa, 0x77, 0xd7, 0x83, 0x8c, 0x68, 0x78, 0xf0, 0xe1, 0xdb, 0xaf, 0x2f, 0x5b, 0x03, 0xdc, 0xa7,
+	0x8d, 0xdb, 0xd3, 0xb8, 0x45, 0xf8, 0x3d, 0x5c, 0xad, 0xf3, 0xc5, 0xf7, 0x56, 0x50, 0xb6, 0x0f,
+	0xd8, 0x1f, 0x6d, 0x82, 0x59, 0xed, 0xdb, 0x5a, 0xfb, 0x26, 0x1e, 0x74, 0xb5, 0x6b, 0xc5, 0x4f,
+	0x08, 0xae, 0x35, 0xc3, 0xc2, 0x0f, 0xd6, 0x72, 0x37, 0xc3, 0xf6, 0x8f, 0xfe, 0x07, 0x6a, 0xad,
+	0x8c, 0xb4, 0x95, 0x21, 0x0e, 0x56, 0x59, 0x79, 0xa5, 0x4f, 0xe3, 0x38, 0xba, 0x98, 0x07, 0xe8,
+	0x72, 0x1e, 0xa0, 0x9f, 0xf3, 0x00, 0x7d, 0x5e, 0x04, 0xce, 0xe5, 0x22, 0x70, 0xbe, 0x2f, 0x02,
+	0xe7, 0x45, 0xbf, 0x1e, 0x78, 0xf7, 0x67, 0x54, 0x9d, 0x17, 0x5c, 0x8e, 0x7b, 0xfa, 0x8f, 0x7b,
+	0xf8, 0x3b, 0x00, 0x00, 0xff, 0xff, 0x54, 0x56, 0x19, 0xe2, 0x25, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -156,6 +347,10 @@ const _ = grpc.SupportPackageIsVersion4
 type QueryClient interface {
 	// Parameters queries the parameters of the module.
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
+	// Queries a list of Profiles items.
+	Profiles(ctx context.Context, in *QueryProfilesRequest, opts ...grpc.CallOption) (*QueryProfilesResponse, error)
+	// Queries a list of ProfileCount items.
+	ProfileCount(ctx context.Context, in *QueryProfileCountRequest, opts ...grpc.CallOption) (*QueryProfileCountResponse, error)
 }
 
 type queryClient struct {
@@ -175,10 +370,32 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 	return out, nil
 }
 
+func (c *queryClient) Profiles(ctx context.Context, in *QueryProfilesRequest, opts ...grpc.CallOption) (*QueryProfilesResponse, error) {
+	out := new(QueryProfilesResponse)
+	err := c.cc.Invoke(ctx, "/parrots.parrots.Query/Profiles", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) ProfileCount(ctx context.Context, in *QueryProfileCountRequest, opts ...grpc.CallOption) (*QueryProfileCountResponse, error) {
+	out := new(QueryProfileCountResponse)
+	err := c.cc.Invoke(ctx, "/parrots.parrots.Query/ProfileCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
+	// Queries a list of Profiles items.
+	Profiles(context.Context, *QueryProfilesRequest) (*QueryProfilesResponse, error)
+	// Queries a list of ProfileCount items.
+	ProfileCount(context.Context, *QueryProfileCountRequest) (*QueryProfileCountResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -187,6 +404,12 @@ type UnimplementedQueryServer struct {
 
 func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsRequest) (*QueryParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Params not implemented")
+}
+func (*UnimplementedQueryServer) Profiles(ctx context.Context, req *QueryProfilesRequest) (*QueryProfilesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Profiles not implemented")
+}
+func (*UnimplementedQueryServer) ProfileCount(ctx context.Context, req *QueryProfileCountRequest) (*QueryProfileCountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProfileCount not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -211,6 +434,42 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_Profiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryProfilesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).Profiles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/parrots.parrots.Query/Profiles",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).Profiles(ctx, req.(*QueryProfilesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_ProfileCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryProfileCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).ProfileCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/parrots.parrots.Query/ProfileCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).ProfileCount(ctx, req.(*QueryProfileCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "parrots.parrots.Query",
 	HandlerType: (*QueryServer)(nil),
@@ -218,6 +477,14 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Params",
 			Handler:    _Query_Params_Handler,
+		},
+		{
+			MethodName: "Profiles",
+			Handler:    _Query_Profiles_Handler,
+		},
+		{
+			MethodName: "ProfileCount",
+			Handler:    _Query_ProfileCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -280,6 +547,141 @@ func (m *QueryParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryProfilesRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryProfilesRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryProfilesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryProfilesResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryProfilesResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryProfilesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Profile) > 0 {
+		for iNdEx := len(m.Profile) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Profile[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryProfileCountRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryProfileCountRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryProfileCountRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryProfileCountResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryProfileCountResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryProfileCountResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Count != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Count))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -308,6 +710,59 @@ func (m *QueryParamsResponse) Size() (n int) {
 	_ = l
 	l = m.Params.Size()
 	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryProfilesRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryProfilesResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Profile) > 0 {
+		for _, e := range m.Profile {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryProfileCountRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *QueryProfileCountResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Count != 0 {
+		n += 1 + sovQuery(uint64(m.Count))
+	}
 	return n
 }
 
@@ -429,6 +884,331 @@ func (m *QueryParamsResponse) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryProfilesRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryProfilesRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryProfilesRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryProfilesResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryProfilesResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryProfilesResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Profile", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Profile = append(m.Profile, &Profile{})
+			if err := m.Profile[len(m.Profile)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryProfileCountRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryProfileCountRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryProfileCountRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryProfileCountResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryProfileCountResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryProfileCountResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
+			}
+			m.Count = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Count |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipQuery(dAtA[iNdEx:])
