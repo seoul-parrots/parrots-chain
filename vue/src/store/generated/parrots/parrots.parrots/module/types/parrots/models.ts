@@ -21,8 +21,8 @@ export interface Beak {
   creator_username: string;
   description: string;
   license: string;
-  tags: string[];
   linked_beaks: number[];
+  tags: string[];
 }
 
 const baseProfile: object = {
@@ -189,8 +189,8 @@ const baseBeak: object = {
   creator_username: "",
   description: "",
   license: "",
-  tags: "",
   linked_beaks: 0,
+  tags: "",
 };
 
 export const Beak = {
@@ -216,14 +216,14 @@ export const Beak = {
     if (message.license !== "") {
       writer.uint32(58).string(message.license);
     }
-    for (const v of message.tags) {
-      writer.uint32(66).string(v!);
-    }
-    writer.uint32(74).fork();
+    writer.uint32(66).fork();
     for (const v of message.linked_beaks) {
       writer.uint64(v);
     }
     writer.ldelim();
+    for (const v of message.tags) {
+      writer.uint32(74).string(v!);
+    }
     return writer;
   },
 
@@ -231,8 +231,8 @@ export const Beak = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseBeak } as Beak;
-    message.tags = [];
     message.linked_beaks = [];
+    message.tags = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -258,9 +258,6 @@ export const Beak = {
           message.license = reader.string();
           break;
         case 8:
-          message.tags.push(reader.string());
-          break;
-        case 9:
           if ((tag & 7) === 2) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
@@ -269,6 +266,9 @@ export const Beak = {
           } else {
             message.linked_beaks.push(longToNumber(reader.uint64() as Long));
           }
+          break;
+        case 9:
+          message.tags.push(reader.string());
           break;
         default:
           reader.skipType(tag & 7);
@@ -280,8 +280,8 @@ export const Beak = {
 
   fromJSON(object: any): Beak {
     const message = { ...baseBeak } as Beak;
-    message.tags = [];
     message.linked_beaks = [];
+    message.tags = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = Number(object.id);
     } else {
@@ -320,14 +320,14 @@ export const Beak = {
     } else {
       message.license = "";
     }
-    if (object.tags !== undefined && object.tags !== null) {
-      for (const e of object.tags) {
-        message.tags.push(String(e));
-      }
-    }
     if (object.linked_beaks !== undefined && object.linked_beaks !== null) {
       for (const e of object.linked_beaks) {
         message.linked_beaks.push(Number(e));
+      }
+    }
+    if (object.tags !== undefined && object.tags !== null) {
+      for (const e of object.tags) {
+        message.tags.push(String(e));
       }
     }
     return message;
@@ -344,23 +344,23 @@ export const Beak = {
     message.description !== undefined &&
       (obj.description = message.description);
     message.license !== undefined && (obj.license = message.license);
-    if (message.tags) {
-      obj.tags = message.tags.map((e) => e);
-    } else {
-      obj.tags = [];
-    }
     if (message.linked_beaks) {
       obj.linked_beaks = message.linked_beaks.map((e) => e);
     } else {
       obj.linked_beaks = [];
+    }
+    if (message.tags) {
+      obj.tags = message.tags.map((e) => e);
+    } else {
+      obj.tags = [];
     }
     return obj;
   },
 
   fromPartial(object: DeepPartial<Beak>): Beak {
     const message = { ...baseBeak } as Beak;
-    message.tags = [];
     message.linked_beaks = [];
+    message.tags = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = object.id;
     } else {
@@ -399,14 +399,14 @@ export const Beak = {
     } else {
       message.license = "";
     }
-    if (object.tags !== undefined && object.tags !== null) {
-      for (const e of object.tags) {
-        message.tags.push(e);
-      }
-    }
     if (object.linked_beaks !== undefined && object.linked_beaks !== null) {
       for (const e of object.linked_beaks) {
         message.linked_beaks.push(e);
+      }
+    }
+    if (object.tags !== undefined && object.tags !== null) {
+      for (const e of object.tags) {
+        message.tags.push(e);
       }
     }
     return message;

@@ -21,6 +21,12 @@ const (
 
 	// ProfileCountKey
 	ProfileCountKey = "Profile-count-"
+
+	// BeakKey
+	BeakKey = "Beak-value-"
+
+	// BeakCountKey
+	BeakCountKey = "Beak-count-"
 )
 
 func KeyPrefix(p string) []byte {

@@ -8,6 +8,7 @@ option go_package = "parrots/x/parrots/types";
 // Msg defines the Msg service.
 service Msg {
       rpc SetProfile(MsgSetProfile) returns (MsgSetProfileResponse);
+  rpc UploadBeak(MsgUploadBeak) returns (MsgUploadBeakResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -19,6 +20,21 @@ message MsgSetProfile {
 }
 
 message MsgSetProfileResponse {
+  uint64 id = 1;
+}
+
+message MsgUploadBeak {
+  string creator = 1;
+  string fileIndex = 2;
+  string name = 3;
+  string creatorUsername = 4;
+  string description = 5;
+  string license = 6;
+  repeated uint64 linkedBeaks = 7;
+  repeated string tags = 8;
+}
+
+message MsgUploadBeakResponse {
   uint64 id = 1;
 }
 

@@ -5,10 +5,12 @@ import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
 import { MsgSetProfile } from "./types/parrots/tx";
+import { MsgUploadBeak } from "./types/parrots/tx";
 
 
 const types = [
   ["/parrots.parrots.MsgSetProfile", MsgSetProfile],
+  ["/parrots.parrots.MsgUploadBeak", MsgUploadBeak],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -42,6 +44,7 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
     msgSetProfile: (data: MsgSetProfile): EncodeObject => ({ typeUrl: "/parrots.parrots.MsgSetProfile", value: MsgSetProfile.fromPartial( data ) }),
+    msgUploadBeak: (data: MsgUploadBeak): EncodeObject => ({ typeUrl: "/parrots.parrots.MsgUploadBeak", value: MsgUploadBeak.fromPartial( data ) }),
     
   };
 };

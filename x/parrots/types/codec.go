@@ -9,12 +9,16 @@ import (
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgSetProfile{}, "parrots/SetProfile", nil)
+	cdc.RegisterConcrete(&MsgUploadBeak{}, "parrots/UploadBeak", nil)
 	// this line is used by starport scaffolding # 2
 }
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgSetProfile{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgUploadBeak{},
 	)
 	// this line is used by starport scaffolding # 3
 

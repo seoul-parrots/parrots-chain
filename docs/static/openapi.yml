@@ -30441,6 +30441,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /parrots/parrots/profile_count:
@@ -51859,6 +51869,12 @@ definitions:
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
   parrots.parrots.MsgSetProfileResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+  parrots.parrots.MsgUploadBeakResponse:
     type: object
     properties:
       id:

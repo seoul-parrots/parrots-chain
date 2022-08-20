@@ -20,6 +20,6 @@ message Beak {
     string creator_username = 5;
     string description = 6;
     string license = 7;
-    repeated string tags = 8;
-    repeated uint64 linked_beaks = 9;
+    repeated uint64 linked_beaks = 8;
+    repeated string tags = 9;
 }
