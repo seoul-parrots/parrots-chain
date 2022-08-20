@@ -19,11 +19,11 @@ export interface QueryParamsResponse {
   params: Params | undefined;
 }
 
-export interface QueryProfilesRequest {
+export interface QueryGetProfilesRequest {
   pagination: PageRequest | undefined;
 }
 
-export interface QueryProfilesResponse {
+export interface QueryGetProfilesResponse {
   Profile: Profile[];
   pagination: PageResponse | undefined;
 }
@@ -131,11 +131,11 @@ export const QueryParamsResponse = {
   },
 };
 
-const baseQueryProfilesRequest: object = {};
+const baseQueryGetProfilesRequest: object = {};
 
-export const QueryProfilesRequest = {
+export const QueryGetProfilesRequest = {
   encode(
-    message: QueryProfilesRequest,
+    message: QueryGetProfilesRequest,
     writer: Writer = Writer.create()
   ): Writer {
     if (message.pagination !== undefined) {
@@ -144,10 +144,12 @@ export const QueryProfilesRequest = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryProfilesRequest {
+  decode(input: Reader | Uint8Array, length?: number): QueryGetProfilesRequest {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryProfilesRequest } as QueryProfilesRequest;
+    const message = {
+      ...baseQueryGetProfilesRequest,
+    } as QueryGetProfilesRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -162,8 +164,10 @@ export const QueryProfilesRequest = {
     return message;
   },
 
-  fromJSON(object: any): QueryProfilesRequest {
-    const message = { ...baseQueryProfilesRequest } as QueryProfilesRequest;
+  fromJSON(object: any): QueryGetProfilesRequest {
+    const message = {
+      ...baseQueryGetProfilesRequest,
+    } as QueryGetProfilesRequest;
     if (object.pagination !== undefined && object.pagination !== null) {
       message.pagination = PageRequest.fromJSON(object.pagination);
     } else {
@@ -172,7 +176,7 @@ export const QueryProfilesRequest = {
     return message;
   },
 
-  toJSON(message: QueryProfilesRequest): unknown {
+  toJSON(message: QueryGetProfilesRequest): unknown {
     const obj: any = {};
     message.pagination !== undefined &&
       (obj.pagination = message.pagination
@@ -181,8 +185,12 @@ export const QueryProfilesRequest = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<QueryProfilesRequest>): QueryProfilesRequest {
-    const message = { ...baseQueryProfilesRequest } as QueryProfilesRequest;
+  fromPartial(
+    object: DeepPartial<QueryGetProfilesRequest>
+  ): QueryGetProfilesRequest {
+    const message = {
+      ...baseQueryGetProfilesRequest,
+    } as QueryGetProfilesRequest;
     if (object.pagination !== undefined && object.pagination !== null) {
       message.pagination = PageRequest.fromPartial(object.pagination);
     } else {
@@ -192,11 +200,11 @@ export const QueryProfilesRequest = {
   },
 };
 
-const baseQueryProfilesResponse: object = {};
+const baseQueryGetProfilesResponse: object = {};
 
-export const QueryProfilesResponse = {
+export const QueryGetProfilesResponse = {
   encode(
-    message: QueryProfilesResponse,
+    message: QueryGetProfilesResponse,
     writer: Writer = Writer.create()
   ): Writer {
     for (const v of message.Profile) {
@@ -211,10 +219,15 @@ export const QueryProfilesResponse = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): QueryProfilesResponse {
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetProfilesResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseQueryProfilesResponse } as QueryProfilesResponse;
+    const message = {
+      ...baseQueryGetProfilesResponse,
+    } as QueryGetProfilesResponse;
     message.Profile = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
@@ -233,8 +246,10 @@ export const QueryProfilesResponse = {
     return message;
   },
 
-  fromJSON(object: any): QueryProfilesResponse {
-    const message = { ...baseQueryProfilesResponse } as QueryProfilesResponse;
+  fromJSON(object: any): QueryGetProfilesResponse {
+    const message = {
+      ...baseQueryGetProfilesResponse,
+    } as QueryGetProfilesResponse;
     message.Profile = [];
     if (object.Profile !== undefined && object.Profile !== null) {
       for (const e of object.Profile) {
@@ -249,7 +264,7 @@ export const QueryProfilesResponse = {
     return message;
   },
 
-  toJSON(message: QueryProfilesResponse): unknown {
+  toJSON(message: QueryGetProfilesResponse): unknown {
     const obj: any = {};
     if (message.Profile) {
       obj.Profile = message.Profile.map((e) =>
@@ -266,9 +281,11 @@ export const QueryProfilesResponse = {
   },
 
   fromPartial(
-    object: DeepPartial<QueryProfilesResponse>
-  ): QueryProfilesResponse {
-    const message = { ...baseQueryProfilesResponse } as QueryProfilesResponse;
+    object: DeepPartial<QueryGetProfilesResponse>
+  ): QueryGetProfilesResponse {
+    const message = {
+      ...baseQueryGetProfilesResponse,
+    } as QueryGetProfilesResponse;
     message.Profile = [];
     if (object.Profile !== undefined && object.Profile !== null) {
       for (const e of object.Profile) {
@@ -410,7 +427,9 @@ export interface Query {
   /** Parameters queries the parameters of the module. */
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
   /** Queries a list of Profiles items. */
-  Profiles(request: QueryProfilesRequest): Promise<QueryProfilesResponse>;
+  GetProfiles(
+    request: QueryGetProfilesRequest
+  ): Promise<QueryGetProfilesResponse>;
   /** Queries a list of ProfileCount items. */
   ProfileCount(
     request: QueryProfileCountRequest
@@ -428,11 +447,17 @@ export class QueryClientImpl implements Query {
     return promise.then((data) => QueryParamsResponse.decode(new Reader(data)));
   }
 
-  Profiles(request: QueryProfilesRequest): Promise<QueryProfilesResponse> {
-    const data = QueryProfilesRequest.encode(request).finish();
-    const promise = this.rpc.request("parrots.parrots.Query", "Profiles", data);
+  GetProfiles(
+    request: QueryGetProfilesRequest
+  ): Promise<QueryGetProfilesResponse> {
+    const data = QueryGetProfilesRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "parrots.parrots.Query",
+      "GetProfiles",
+      data
+    );
     return promise.then((data) =>
-      QueryProfilesResponse.decode(new Reader(data))
+      QueryGetProfilesResponse.decode(new Reader(data))
     );
   }
 

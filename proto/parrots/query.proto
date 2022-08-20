@@ -18,8 +18,8 @@ service Query {
     option (google.api.http).get = "/parrots/parrots/params";
   }
   // Queries a list of Profiles items.
-	rpc Profiles(QueryProfilesRequest) returns (QueryProfilesResponse) {
-		option (google.api.http).get = "/parrots/parrots/profiles";
+	rpc GetProfiles(QueryGetProfilesRequest) returns (QueryGetProfilesResponse) {
+		option (google.api.http).get = "/parrots/parrots/profile";
 	}
 
 // Queries a list of ProfileCount items.
@@ -39,11 +39,11 @@ message QueryParamsResponse {
   Params params = 1 [(gogoproto.nullable) = false];
 }
 
-message QueryProfilesRequest {
+message QueryGetProfilesRequest {
   cosmos.base.query.v1beta1.PageRequest pagination = 1;
 }
 
-message QueryProfilesResponse {
+message QueryGetProfilesResponse {
   repeated Profile Profile = 1;
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }

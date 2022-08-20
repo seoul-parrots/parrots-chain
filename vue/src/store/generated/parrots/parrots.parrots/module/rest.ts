@@ -29,20 +29,7 @@ export interface ParrotsProfile {
   respectedBeaks?: string[];
 }
 
-/**
- * QueryParamsResponse is response type for the Query/Params RPC method.
- */
-export interface ParrotsQueryParamsResponse {
-  /** params holds all the parameters of this module. */
-  params?: ParrotsParams;
-}
-
-export interface ParrotsQueryProfileCountResponse {
-  /** @format uint64 */
-  count?: string;
-}
-
-export interface ParrotsQueryProfilesResponse {
+export interface ParrotsQueryGetProfilesResponse {
   Profile?: ParrotsProfile[];
 
   /**
@@ -55,6 +42,19 @@ export interface ParrotsQueryProfilesResponse {
    *  }
    */
   pagination?: V1Beta1PageResponse;
+}
+
+/**
+ * QueryParamsResponse is response type for the Query/Params RPC method.
+ */
+export interface ParrotsQueryParamsResponse {
+  /** params holds all the parameters of this module. */
+  params?: ParrotsParams;
+}
+
+export interface ParrotsQueryProfileCountResponse {
+  /** @format uint64 */
+  count?: string;
 }
 
 export interface ProtobufAny {
@@ -340,27 +340,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
-   * @name QueryProfileCount
-   * @summary Queries a list of ProfileCount items.
-   * @request GET:/parrots/parrots/profile_count
-   */
-  queryProfileCount = (params: RequestParams = {}) =>
-    this.request<ParrotsQueryProfileCountResponse, RpcStatus>({
-      path: `/parrots/parrots/profile_count`,
-      method: "GET",
-      format: "json",
-      ...params,
-    });
-
-  /**
-   * No description
-   *
-   * @tags Query
-   * @name QueryProfiles
+   * @name QueryGetProfiles
    * @summary Queries a list of Profiles items.
-   * @request GET:/parrots/parrots/profiles
+   * @request GET:/parrots/parrots/profile
    */
-  queryProfiles = (
+  queryGetProfiles = (
     query?: {
       "pagination.key"?: string;
       "pagination.offset"?: string;
@@ -369,10 +353,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     },
     params: RequestParams = {},
   ) =>
-    this.request<ParrotsQueryProfilesResponse, RpcStatus>({
-      path: `/parrots/parrots/profiles`,
+    this.request<ParrotsQueryGetProfilesResponse, RpcStatus>({
+      path: `/parrots/parrots/profile`,
       method: "GET",
       query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryProfileCount
+   * @summary Queries a list of ProfileCount items.
+   * @request GET:/parrots/parrots/profile_count
+   */
+  queryProfileCount = (params: RequestParams = {}) =>
+    this.request<ParrotsQueryProfileCountResponse, RpcStatus>({
+      path: `/parrots/parrots/profile_count`,
+      method: "GET",
       format: "json",
       ...params,
     });

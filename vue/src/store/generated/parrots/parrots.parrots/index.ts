@@ -44,7 +44,7 @@ function getStructure(template) {
 const getDefaultState = () => {
 	return {
 				Params: {},
-				Profiles: {},
+				GetProfiles: {},
 				ProfileCount: {},
 				
 				_Structure: {
@@ -85,11 +85,11 @@ export default {
 					}
 			return state.Params[JSON.stringify(params)] ?? {}
 		},
-				getProfiles: (state) => (params = { params: {}}) => {
+				getGetProfiles: (state) => (params = { params: {}}) => {
 					if (!(<any> params).query) {
 						(<any> params).query=null
 					}
-			return state.Profiles[JSON.stringify(params)] ?? {}
+			return state.GetProfiles[JSON.stringify(params)] ?? {}
 		},
 				getProfileCount: (state) => (params = { params: {}}) => {
 					if (!(<any> params).query) {
@@ -158,22 +158,22 @@ export default {
 		 		
 		
 		
-		async QueryProfiles({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+		async QueryGetProfiles({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
 				const key = params ?? {};
 				const queryClient=await initQueryClient(rootGetters)
-				let value= (await queryClient.queryProfiles(query)).data
+				let value= (await queryClient.queryGetProfiles(query)).data
 				
 					
 				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
-					let next_values=(await queryClient.queryProfiles({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					let next_values=(await queryClient.queryGetProfiles({...query, 'pagination.key':(<any> value).pagination.next_key})).data
 					value = mergeResults(value, next_values);
 				}
-				commit('QUERY', { query: 'Profiles', key: { params: {...key}, query}, value })
-				if (subscribe) commit('SUBSCRIBE', { action: 'QueryProfiles', payload: { options: { all }, params: {...key},query }})
-				return getters['getProfiles']( { params: {...key}, query}) ?? {}
+				commit('QUERY', { query: 'GetProfiles', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryGetProfiles', payload: { options: { all }, params: {...key},query }})
+				return getters['getGetProfiles']( { params: {...key}, query}) ?? {}
 			} catch (e) {
-				throw new Error('QueryClient:QueryProfiles API Node Unavailable. Could not perform query: ' + e.message)
+				throw new Error('QueryClient:QueryGetProfiles API Node Unavailable. Could not perform query: ' + e.message)
 				
 			}
 		},

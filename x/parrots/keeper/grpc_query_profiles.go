@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) Profiles(goCtx context.Context, req *types.QueryProfilesRequest) (*types.QueryProfilesResponse, error) {
+func (k Keeper) GetProfiles(goCtx context.Context, req *types.QueryGetProfilesRequest) (*types.QueryGetProfilesResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -38,5 +38,5 @@ func (k Keeper) Profiles(goCtx context.Context, req *types.QueryProfilesRequest)
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	return &types.QueryProfilesResponse{Profile: profiles, Pagination: pageResponse}, nil
+	return &types.QueryGetProfilesResponse{Profile: profiles, Pagination: pageResponse}, nil
 }

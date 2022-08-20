@@ -3,17 +3,18 @@ package cli
 import (
 	"strconv"
 
+	"parrots/x/parrots/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
-	"parrots/x/parrots/types"
 )
 
 var _ = strconv.Itoa(0)
 
-func CmdProfiles() *cobra.Command {
+func CmdGetProfiles() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "profiles",
+		Use:   "get-profiles",
 		Short: "Query profiles",
 		Args:  cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
@@ -25,9 +26,9 @@ func CmdProfiles() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryProfilesRequest{}
+			params := &types.QueryGetProfilesRequest{}
 
-			res, err := queryClient.Profiles(cmd.Context(), params)
+			res, err := queryClient.GetProfiles(cmd.Context(), params)
 			if err != nil {
 				return err
 			}
