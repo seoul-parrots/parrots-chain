@@ -29,6 +29,10 @@ export interface ParrotsProfile {
   respectedBeaks?: string[];
 }
 
+export interface ParrotsQueryGetProfileResponse {
+  profile?: ParrotsProfile;
+}
+
 export interface ParrotsQueryGetProfilesResponse {
   Profile?: ParrotsProfile[];
 
@@ -320,6 +324,23 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryGetProfile
+   * @summary Queries a list of GetProfile items.
+   * @request GET:/parrots/parrots/get_profile
+   */
+  queryGetProfile = (query?: { id?: string }, params: RequestParams = {}) =>
+    this.request<ParrotsQueryGetProfileResponse, RpcStatus>({
+      path: `/parrots/parrots/get_profile`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *

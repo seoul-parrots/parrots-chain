@@ -30176,6 +30176,60 @@ paths:
           format: uint64
       tags:
         - Query
+  /parrots/parrots/get_profile:
+    get:
+      summary: Queries a list of GetProfile items.
+      operationId: ParrotsParrotsGetProfile
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              profile:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  creator:
+                    type: string
+                  username:
+                    type: string
+                  display_name:
+                    type: string
+                  description:
+                    type: string
+                  respectedBeaks:
+                    type: array
+                    items:
+                      type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: query
+          required: false
+          type: string
+          format: uint64
+      tags:
+        - Query
   /parrots/parrots/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -30212,43 +30266,10 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /parrots/parrots/profile_count:
-    get:
-      summary: Queries a list of ProfileCount items.
-      operationId: ParrotsParrotsProfileCount
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              count:
-                type: string
-                format: uint64
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      tags:
-        - Query
-  /parrots/parrots/profiles:
+  /parrots/parrots/profile:
     get:
       summary: Queries a list of Profiles items.
-      operationId: ParrotsParrotsProfiles
+      operationId: ParrotsParrotsGetProfiles
       responses:
         '200':
           description: A successful response.
@@ -30377,6 +30398,39 @@ paths:
           in: query
           required: false
           type: boolean
+      tags:
+        - Query
+  /parrots/parrots/profile_count:
+    get:
+      summary: Queries a list of ProfileCount items.
+      operationId: ParrotsParrotsProfileCount
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              count:
+                type: string
+                format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
       tags:
         - Query
   /tendermint/spn/monitoringp/connection_channel_id:
@@ -51788,20 +51842,28 @@ definitions:
         type: array
         items:
           type: string
-  parrots.parrots.QueryParamsResponse:
+  parrots.parrots.QueryGetProfileResponse:
     type: object
     properties:
-      params:
-        description: params holds all the parameters of this module.
+      profile:
         type: object
-    description: QueryParamsResponse is response type for the Query/Params RPC method.
-  parrots.parrots.QueryProfileCountResponse:
-    type: object
-    properties:
-      count:
-        type: string
-        format: uint64
-  parrots.parrots.QueryProfilesResponse:
+        properties:
+          id:
+            type: string
+            format: uint64
+          creator:
+            type: string
+          username:
+            type: string
+          display_name:
+            type: string
+          description:
+            type: string
+          respectedBeaks:
+            type: array
+            items:
+              type: string
+  parrots.parrots.QueryGetProfilesResponse:
     type: object
     properties:
       Profile:
@@ -51849,6 +51911,19 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  parrots.parrots.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  parrots.parrots.QueryProfileCountResponse:
+    type: object
+    properties:
+      count:
+        type: string
+        format: uint64
   tendermint.spn.monitoringp.ConnectionChannelID:
     type: object
     properties:

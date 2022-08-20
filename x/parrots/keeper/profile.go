@@ -28,6 +28,22 @@ func (k Keeper) AddProfile(ctx sdk.Context, profile types.Profile) uint64 {
 	return count
 }
 
+// GetSingleProfile fetches profile object from blockchain.
+func (k Keeper) GetSingleProfile(ctx sdk.Context, id uint64) (*types.Profile, error) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.ProfileKey))
+
+	byteKey := make([]byte, 8)
+	binary.BigEndian.PutUint64(byteKey, id)
+
+	profile := &types.Profile{}
+	bz := store.Get(byteKey)
+	if err := k.cdc.Unmarshal(bz, profile); err != nil {
+		return nil, err
+	}
+
+	return profile, nil
+}
+
 // SetProfileCount sets profile count from blockchain.
 func (k Keeper) SetProfileCount(ctx sdk.Context, count uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.ProfileCountKey))

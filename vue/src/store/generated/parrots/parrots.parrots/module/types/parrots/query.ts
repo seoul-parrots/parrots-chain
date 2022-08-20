@@ -34,6 +34,14 @@ export interface QueryProfileCountResponse {
   count: number;
 }
 
+export interface QueryGetProfileRequest {
+  id: number;
+}
+
+export interface QueryGetProfileResponse {
+  profile: Profile | undefined;
+}
+
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
@@ -422,6 +430,135 @@ export const QueryProfileCountResponse = {
   },
 };
 
+const baseQueryGetProfileRequest: object = { id: 0 };
+
+export const QueryGetProfileRequest = {
+  encode(
+    message: QueryGetProfileRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetProfileRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetProfileRequest } as QueryGetProfileRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetProfileRequest {
+    const message = { ...baseQueryGetProfileRequest } as QueryGetProfileRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetProfileRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetProfileRequest>
+  ): QueryGetProfileRequest {
+    const message = { ...baseQueryGetProfileRequest } as QueryGetProfileRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetProfileResponse: object = {};
+
+export const QueryGetProfileResponse = {
+  encode(
+    message: QueryGetProfileResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.profile !== undefined) {
+      Profile.encode(message.profile, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetProfileResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetProfileResponse,
+    } as QueryGetProfileResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.profile = Profile.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetProfileResponse {
+    const message = {
+      ...baseQueryGetProfileResponse,
+    } as QueryGetProfileResponse;
+    if (object.profile !== undefined && object.profile !== null) {
+      message.profile = Profile.fromJSON(object.profile);
+    } else {
+      message.profile = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetProfileResponse): unknown {
+    const obj: any = {};
+    message.profile !== undefined &&
+      (obj.profile = message.profile
+        ? Profile.toJSON(message.profile)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetProfileResponse>
+  ): QueryGetProfileResponse {
+    const message = {
+      ...baseQueryGetProfileResponse,
+    } as QueryGetProfileResponse;
+    if (object.profile !== undefined && object.profile !== null) {
+      message.profile = Profile.fromPartial(object.profile);
+    } else {
+      message.profile = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -434,6 +571,8 @@ export interface Query {
   ProfileCount(
     request: QueryProfileCountRequest
   ): Promise<QueryProfileCountResponse>;
+  /** Queries a list of GetProfile items. */
+  GetProfile(request: QueryGetProfileRequest): Promise<QueryGetProfileResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -472,6 +611,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryProfileCountResponse.decode(new Reader(data))
+    );
+  }
+
+  GetProfile(
+    request: QueryGetProfileRequest
+  ): Promise<QueryGetProfileResponse> {
+    const data = QueryGetProfileRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "parrots.parrots.Query",
+      "GetProfile",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetProfileResponse.decode(new Reader(data))
     );
   }
 }

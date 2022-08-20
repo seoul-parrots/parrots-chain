@@ -27,6 +27,11 @@ service Query {
 		option (google.api.http).get = "/parrots/parrots/profile_count";
 	}
 
+// Queries a list of GetProfile items.
+	rpc GetProfile(QueryGetProfileRequest) returns (QueryGetProfileResponse) {
+		option (google.api.http).get = "/parrots/parrots/get_profile";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -53,6 +58,14 @@ message QueryProfileCountRequest {
 
 message QueryProfileCountResponse {
   uint64 count = 1;
+}
+
+message QueryGetProfileRequest {
+  uint64 id = 1;
+}
+
+message QueryGetProfileResponse {
+  Profile profile = 1;
 }
 
 // this line is used by starport scaffolding # 3
