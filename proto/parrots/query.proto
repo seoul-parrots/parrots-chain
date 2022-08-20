@@ -37,6 +37,11 @@ service Query {
 		option (google.api.http).get = "/parrots/parrots/get_profile_by_username";
 	}
 
+// Queries a list of GetBeaksCount items.
+	rpc GetBeaksCount(QueryGetBeaksCountRequest) returns (QueryGetBeaksCountResponse) {
+		option (google.api.http).get = "/parrots/parrots/get_beaks_count";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -79,6 +84,13 @@ message QueryGetProfileByUsernameRequest {
 
 message QueryGetProfileByUsernameResponse {
   Profile profile = 1;
+}
+
+message QueryGetBeaksCountRequest {
+}
+
+message QueryGetBeaksCountResponse {
+  uint64 count = 1;
 }
 
 // this line is used by starport scaffolding # 3

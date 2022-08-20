@@ -48,6 +48,7 @@ const getDefaultState = () => {
 				ProfileCount: {},
 				GetProfile: {},
 				GetProfileByUsername: {},
+				GetBeaksCount: {},
 				
 				_Structure: {
 						Profile: getStructure(Profile.fromPartial({})),
@@ -110,6 +111,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.GetProfileByUsername[JSON.stringify(params)] ?? {}
+		},
+				getGetBeaksCount: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.GetBeaksCount[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -267,21 +274,28 @@ export default {
 		},
 		
 		
-		async sendMsgSetProfile({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		
+		 		
+		
+		
+		async QueryGetBeaksCount({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSetProfile(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryGetBeaksCount()).data
+				
+					
+				commit('QUERY', { query: 'GetBeaksCount', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryGetBeaksCount', payload: { options: { all }, params: {...key},query }})
+				return getters['getGetBeaksCount']( { params: {...key}, query}) ?? {}
 			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSetProfile:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgSetProfile:Send Could not broadcast Tx: '+ e.message)
-				}
+				throw new Error('QueryClient:QueryGetBeaksCount API Node Unavailable. Could not perform query: ' + e.message)
+				
 			}
 		},
+		
+		
 		async sendMsgUploadBeak({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -297,20 +311,22 @@ export default {
 				}
 			}
 		},
-		
-		async MsgSetProfile({ rootGetters }, { value }) {
+		async sendMsgSetProfile({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgSetProfile(value)
-				return msg
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgSetProfile:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgSetProfile:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgSetProfile:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgUploadBeak({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -321,6 +337,19 @@ export default {
 					throw new Error('TxClient:MsgUploadBeak:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgUploadBeak:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgSetProfile({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSetProfile(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSetProfile:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgSetProfile:Create Could not create message: ' + e.message)
 				}
 			}
 		},

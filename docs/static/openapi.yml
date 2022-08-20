@@ -30176,6 +30176,39 @@ paths:
           format: uint64
       tags:
         - Query
+  /parrots/parrots/get_beaks_count:
+    get:
+      summary: Queries a list of GetBeaksCount items.
+      operationId: ParrotsParrotsGetBeaksCount
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              count:
+                type: string
+                format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /parrots/parrots/get_profile:
     get:
       summary: Queries a list of GetProfile items.
@@ -51901,6 +51934,12 @@ definitions:
         type: array
         items:
           type: string
+  parrots.parrots.QueryGetBeaksCountResponse:
+    type: object
+    properties:
+      count:
+        type: string
+        format: uint64
   parrots.parrots.QueryGetProfileByUsernameResponse:
     type: object
     properties:

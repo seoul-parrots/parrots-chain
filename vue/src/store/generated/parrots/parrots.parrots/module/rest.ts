@@ -34,6 +34,11 @@ export interface ParrotsProfile {
   respectedBeaks?: string[];
 }
 
+export interface ParrotsQueryGetBeaksCountResponse {
+  /** @format uint64 */
+  count?: string;
+}
+
 export interface ParrotsQueryGetProfileByUsernameResponse {
   profile?: ParrotsProfile;
 }
@@ -333,6 +338,22 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryGetBeaksCount
+   * @summary Queries a list of GetBeaksCount items.
+   * @request GET:/parrots/parrots/get_beaks_count
+   */
+  queryGetBeaksCount = (params: RequestParams = {}) =>
+    this.request<ParrotsQueryGetBeaksCountResponse, RpcStatus>({
+      path: `/parrots/parrots/get_beaks_count`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *

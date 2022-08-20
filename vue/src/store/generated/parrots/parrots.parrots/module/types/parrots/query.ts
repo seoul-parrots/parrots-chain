@@ -50,6 +50,12 @@ export interface QueryGetProfileByUsernameResponse {
   profile: Profile | undefined;
 }
 
+export interface QueryGetBeaksCountRequest {}
+
+export interface QueryGetBeaksCountResponse {
+  count: number;
+}
+
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
@@ -708,6 +714,127 @@ export const QueryGetProfileByUsernameResponse = {
   },
 };
 
+const baseQueryGetBeaksCountRequest: object = {};
+
+export const QueryGetBeaksCountRequest = {
+  encode(
+    _: QueryGetBeaksCountRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetBeaksCountRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetBeaksCountRequest,
+    } as QueryGetBeaksCountRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryGetBeaksCountRequest {
+    const message = {
+      ...baseQueryGetBeaksCountRequest,
+    } as QueryGetBeaksCountRequest;
+    return message;
+  },
+
+  toJSON(_: QueryGetBeaksCountRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<QueryGetBeaksCountRequest>
+  ): QueryGetBeaksCountRequest {
+    const message = {
+      ...baseQueryGetBeaksCountRequest,
+    } as QueryGetBeaksCountRequest;
+    return message;
+  },
+};
+
+const baseQueryGetBeaksCountResponse: object = { count: 0 };
+
+export const QueryGetBeaksCountResponse = {
+  encode(
+    message: QueryGetBeaksCountResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.count !== 0) {
+      writer.uint32(8).uint64(message.count);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetBeaksCountResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetBeaksCountResponse,
+    } as QueryGetBeaksCountResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.count = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetBeaksCountResponse {
+    const message = {
+      ...baseQueryGetBeaksCountResponse,
+    } as QueryGetBeaksCountResponse;
+    if (object.count !== undefined && object.count !== null) {
+      message.count = Number(object.count);
+    } else {
+      message.count = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetBeaksCountResponse): unknown {
+    const obj: any = {};
+    message.count !== undefined && (obj.count = message.count);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetBeaksCountResponse>
+  ): QueryGetBeaksCountResponse {
+    const message = {
+      ...baseQueryGetBeaksCountResponse,
+    } as QueryGetBeaksCountResponse;
+    if (object.count !== undefined && object.count !== null) {
+      message.count = object.count;
+    } else {
+      message.count = 0;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -726,6 +853,10 @@ export interface Query {
   GetProfileByUsername(
     request: QueryGetProfileByUsernameRequest
   ): Promise<QueryGetProfileByUsernameResponse>;
+  /** Queries a list of GetBeaksCount items. */
+  GetBeaksCount(
+    request: QueryGetBeaksCountRequest
+  ): Promise<QueryGetBeaksCountResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -792,6 +923,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryGetProfileByUsernameResponse.decode(new Reader(data))
+    );
+  }
+
+  GetBeaksCount(
+    request: QueryGetBeaksCountRequest
+  ): Promise<QueryGetBeaksCountResponse> {
+    const data = QueryGetBeaksCountRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "parrots.parrots.Query",
+      "GetBeaksCount",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetBeaksCountResponse.decode(new Reader(data))
     );
   }
 }
