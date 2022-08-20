@@ -38,6 +38,8 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 
 	cmd.AddCommand(CmdGetBeaksByTag())
 
+	cmd.AddCommand(CmdGetRespectedBeaks())
+
 	// this line is used by starport scaffolding # 1
 
 	return cmd

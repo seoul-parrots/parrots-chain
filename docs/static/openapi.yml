@@ -30800,6 +30800,101 @@ paths:
           type: string
       tags:
         - Query
+  /parrots/parrots/get_respected_beaks:
+    get:
+      summary: Queries a list of GetRespectedBeaks items.
+      operationId: ParrotsParrotsGetRespectedBeaks
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              beaks:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    creator:
+                      type: string
+                    file_index:
+                      type: string
+                    name:
+                      type: string
+                    creator_username:
+                      type: string
+                    description:
+                      type: string
+                    license:
+                      type: string
+                    respect_count:
+                      type: string
+                      format: uint64
+                    linked_beaks:
+                      type: array
+                      items:
+                        type: string
+                        format: uint64
+                    tags:
+                      type: array
+                      items:
+                        type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: query
+          required: false
+          type: string
+          format: uint64
+      tags:
+        - Query
   /parrots/parrots/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -52729,6 +52824,66 @@ definitions:
               items:
                 type: string
                 format: uint64
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  parrots.parrots.QueryGetRespectedBeaksResponse:
+    type: object
+    properties:
+      beaks:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            creator:
+              type: string
+            file_index:
+              type: string
+            name:
+              type: string
+            creator_username:
+              type: string
+            description:
+              type: string
+            license:
+              type: string
+            respect_count:
+              type: string
+              format: uint64
+            linked_beaks:
+              type: array
+              items:
+                type: string
+                format: uint64
+            tags:
+              type: array
+              items:
+                type: string
       pagination:
         type: object
         properties:

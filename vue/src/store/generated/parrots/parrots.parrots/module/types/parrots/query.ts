@@ -93,6 +93,15 @@ export interface QueryGetBeaksByTagResponse {
   pagination: PageResponse | undefined;
 }
 
+export interface QueryGetRespectedBeaksRequest {
+  id: number;
+}
+
+export interface QueryGetRespectedBeaksResponse {
+  beaks: Beak[];
+  pagination: PageResponse | undefined;
+}
+
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
@@ -1553,6 +1562,174 @@ export const QueryGetBeaksByTagResponse = {
   },
 };
 
+const baseQueryGetRespectedBeaksRequest: object = { id: 0 };
+
+export const QueryGetRespectedBeaksRequest = {
+  encode(
+    message: QueryGetRespectedBeaksRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetRespectedBeaksRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetRespectedBeaksRequest,
+    } as QueryGetRespectedBeaksRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetRespectedBeaksRequest {
+    const message = {
+      ...baseQueryGetRespectedBeaksRequest,
+    } as QueryGetRespectedBeaksRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetRespectedBeaksRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetRespectedBeaksRequest>
+  ): QueryGetRespectedBeaksRequest {
+    const message = {
+      ...baseQueryGetRespectedBeaksRequest,
+    } as QueryGetRespectedBeaksRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetRespectedBeaksResponse: object = {};
+
+export const QueryGetRespectedBeaksResponse = {
+  encode(
+    message: QueryGetRespectedBeaksResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.beaks) {
+      Beak.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetRespectedBeaksResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetRespectedBeaksResponse,
+    } as QueryGetRespectedBeaksResponse;
+    message.beaks = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.beaks.push(Beak.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetRespectedBeaksResponse {
+    const message = {
+      ...baseQueryGetRespectedBeaksResponse,
+    } as QueryGetRespectedBeaksResponse;
+    message.beaks = [];
+    if (object.beaks !== undefined && object.beaks !== null) {
+      for (const e of object.beaks) {
+        message.beaks.push(Beak.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetRespectedBeaksResponse): unknown {
+    const obj: any = {};
+    if (message.beaks) {
+      obj.beaks = message.beaks.map((e) => (e ? Beak.toJSON(e) : undefined));
+    } else {
+      obj.beaks = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetRespectedBeaksResponse>
+  ): QueryGetRespectedBeaksResponse {
+    const message = {
+      ...baseQueryGetRespectedBeaksResponse,
+    } as QueryGetRespectedBeaksResponse;
+    message.beaks = [];
+    if (object.beaks !== undefined && object.beaks !== null) {
+      for (const e of object.beaks) {
+        message.beaks.push(Beak.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -1591,6 +1768,10 @@ export interface Query {
   GetBeaksByTag(
     request: QueryGetBeaksByTagRequest
   ): Promise<QueryGetBeaksByTagResponse>;
+  /** Queries a list of GetRespectedBeaks items. */
+  GetRespectedBeaks(
+    request: QueryGetRespectedBeaksRequest
+  ): Promise<QueryGetRespectedBeaksResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -1727,6 +1908,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryGetBeaksByTagResponse.decode(new Reader(data))
+    );
+  }
+
+  GetRespectedBeaks(
+    request: QueryGetRespectedBeaksRequest
+  ): Promise<QueryGetRespectedBeaksResponse> {
+    const data = QueryGetRespectedBeaksRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "parrots.parrots.Query",
+      "GetRespectedBeaks",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetRespectedBeaksResponse.decode(new Reader(data))
     );
   }
 }

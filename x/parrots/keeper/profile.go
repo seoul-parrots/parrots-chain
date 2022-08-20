@@ -104,6 +104,25 @@ func (k Keeper) GetSingleProfileByCreator(ctx sdk.Context, creator string) (*typ
 	return nil, errors.New("not found by given creator")
 }
 
+// GetSingleProfile fetches profile object from blockchain.
+func (k Keeper) GetEveryRespectedBeaks(ctx sdk.Context, id uint64) ([]*types.Beak, error) {
+	profile, err := k.GetSingleProfile(ctx, id)
+	if err != nil {
+		return nil, errors.New("internal error")
+	}
+
+	var beaks []*types.Beak
+	for _, beakId := range profile.RespectedBeaks {
+		beak, err := k.GetSingleBeak(ctx, beakId)
+		if err != nil {
+			return nil, errors.New("internal error")
+		}
+		beaks = append(beaks, beak)
+	}
+
+	return beaks, nil
+}
+
 // SetProfileCount sets profile count from blockchain.
 func (k Keeper) SetProfileCount(ctx sdk.Context, count uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.ProfileCountKey))
