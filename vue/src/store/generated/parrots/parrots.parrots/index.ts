@@ -56,6 +56,7 @@ const getDefaultState = () => {
 				GetBeaksByTag: {},
 				GetRespectedBeaks: {},
 				GetProfileByCreator: {},
+				GetCommentsByBeakId: {},
 				
 				_Structure: {
 						Profile: getStructure(Profile.fromPartial({})),
@@ -161,6 +162,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.GetProfileByCreator[JSON.stringify(params)] ?? {}
+		},
+				getGetCommentsByBeakId: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.GetCommentsByBeakId[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -496,6 +503,32 @@ export default {
 		},
 		
 		
+		
+		
+		 		
+		
+		
+		async QueryGetCommentsByBeakId({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryGetCommentsByBeakId(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryGetCommentsByBeakId({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'GetCommentsByBeakId', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryGetCommentsByBeakId', payload: { options: { all }, params: {...key},query }})
+				return getters['getGetCommentsByBeakId']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryGetCommentsByBeakId API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
 		async sendMsgUploadBeak({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -508,36 +541,6 @@ export default {
 					throw new Error('TxClient:MsgUploadBeak:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgUploadBeak:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgSendRespect({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSendRespect(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSendRespect:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgSendRespect:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgSetProfile({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSetProfile(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSetProfile:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgSetProfile:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -556,6 +559,36 @@ export default {
 				}
 			}
 		},
+		async sendMsgSetProfile({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSetProfile(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSetProfile:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgSetProfile:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgSendRespect({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSendRespect(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSendRespect:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgSendRespect:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		
 		async MsgUploadBeak({ rootGetters }, { value }) {
 			try {
@@ -570,16 +603,16 @@ export default {
 				}
 			}
 		},
-		async MsgSendRespect({ rootGetters }, { value }) {
+		async MsgCreateComment({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSendRespect(value)
+				const msg = await txClient.msgCreateComment(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSendRespect:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateComment:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgSendRespect:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgCreateComment:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -596,16 +629,16 @@ export default {
 				}
 			}
 		},
-		async MsgCreateComment({ rootGetters }, { value }) {
+		async MsgSendRespect({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateComment(value)
+				const msg = await txClient.msgSendRespect(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateComment:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSendRespect:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgCreateComment:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgSendRespect:Create Could not create message: ' + e.message)
 				}
 			}
 		},

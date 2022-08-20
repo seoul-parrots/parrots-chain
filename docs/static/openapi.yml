@@ -30691,6 +30691,107 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
+  /parrots/parrots/get_comments_by_beak_id:
+    get:
+      summary: Queries a list of GetCommentsByBeakId items.
+      operationId: ParrotsParrotsGetCommentsByBeakId
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              comments:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    creator:
+                      type: string
+                    username:
+                      type: string
+                    comment:
+                      type: string
+                    timestamp:
+                      type: string
+                      format: uint64
+                    beak_id:
+                      type: string
+                      format: uint64
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: beakId
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.next_key
+          description: |-
+            next_key is the key to be passed to PageRequest.key to
+            query the next page most efficiently
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.total
+          description: >-
+            total is total number of results available if
+            PageRequest.count_total
+
+            was set, its value is undefined otherwise
+          in: query
+          required: false
+          type: string
+          format: uint64
+      tags:
+        - Query
   /parrots/parrots/get_profile:
     get:
       summary: Queries a list of GetProfile items.
@@ -52555,6 +52656,24 @@ definitions:
         type: array
         items:
           type: string
+  parrots.parrots.Comment:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      creator:
+        type: string
+      username:
+        type: string
+      comment:
+        type: string
+      timestamp:
+        type: string
+        format: uint64
+      beak_id:
+        type: string
+        format: uint64
   parrots.parrots.MsgCreateCommentResponse:
     type: object
   parrots.parrots.MsgSendRespectResponse:
@@ -52812,6 +52931,54 @@ definitions:
       count:
         type: string
         format: uint64
+  parrots.parrots.QueryGetCommentsByBeakIdResponse:
+    type: object
+    properties:
+      comments:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            creator:
+              type: string
+            username:
+              type: string
+            comment:
+              type: string
+            timestamp:
+              type: string
+              format: uint64
+            beak_id:
+              type: string
+              format: uint64
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
   parrots.parrots.QueryGetProfileByCreatorResponse:
     type: object
     properties:

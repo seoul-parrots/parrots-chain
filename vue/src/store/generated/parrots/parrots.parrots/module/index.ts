@@ -5,16 +5,16 @@ import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
 import { MsgUploadBeak } from "./types/parrots/tx";
-import { MsgSendRespect } from "./types/parrots/tx";
-import { MsgSetProfile } from "./types/parrots/tx";
 import { MsgCreateComment } from "./types/parrots/tx";
+import { MsgSetProfile } from "./types/parrots/tx";
+import { MsgSendRespect } from "./types/parrots/tx";
 
 
 const types = [
   ["/parrots.parrots.MsgUploadBeak", MsgUploadBeak],
-  ["/parrots.parrots.MsgSendRespect", MsgSendRespect],
-  ["/parrots.parrots.MsgSetProfile", MsgSetProfile],
   ["/parrots.parrots.MsgCreateComment", MsgCreateComment],
+  ["/parrots.parrots.MsgSetProfile", MsgSetProfile],
+  ["/parrots.parrots.MsgSendRespect", MsgSendRespect],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -48,9 +48,9 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
     msgUploadBeak: (data: MsgUploadBeak): EncodeObject => ({ typeUrl: "/parrots.parrots.MsgUploadBeak", value: MsgUploadBeak.fromPartial( data ) }),
-    msgSendRespect: (data: MsgSendRespect): EncodeObject => ({ typeUrl: "/parrots.parrots.MsgSendRespect", value: MsgSendRespect.fromPartial( data ) }),
-    msgSetProfile: (data: MsgSetProfile): EncodeObject => ({ typeUrl: "/parrots.parrots.MsgSetProfile", value: MsgSetProfile.fromPartial( data ) }),
     msgCreateComment: (data: MsgCreateComment): EncodeObject => ({ typeUrl: "/parrots.parrots.MsgCreateComment", value: MsgCreateComment.fromPartial( data ) }),
+    msgSetProfile: (data: MsgSetProfile): EncodeObject => ({ typeUrl: "/parrots.parrots.MsgSetProfile", value: MsgSetProfile.fromPartial( data ) }),
+    msgSendRespect: (data: MsgSendRespect): EncodeObject => ({ typeUrl: "/parrots.parrots.MsgSendRespect", value: MsgSendRespect.fromPartial( data ) }),
     
   };
 };
