@@ -25,6 +25,8 @@ export interface ParrotsBeak {
   tags?: string[];
 }
 
+export type ParrotsMsgCreateCommentResponse = object;
+
 export type ParrotsMsgSendRespectResponse = object;
 
 export interface ParrotsMsgSetProfileResponse {

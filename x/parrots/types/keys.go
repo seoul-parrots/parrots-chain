@@ -27,6 +27,12 @@ const (
 
 	// BeakCountKey
 	BeakCountKey = "Beak-count-"
+
+	// CommentKey
+	CommentKey = "Comment-value-"
+
+	// CommentCountKey
+	CommentCountKey = "Comment-count-"
 )
 
 func KeyPrefix(p string) []byte {

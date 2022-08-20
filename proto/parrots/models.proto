@@ -24,3 +24,12 @@ message Beak {
     repeated uint64 linked_beaks = 9;
     repeated string tags = 10;
 }
+
+message Comment {
+    uint64 id = 1;
+    string creator = 2;
+    string username = 3;
+    string comment = 4;
+    uint64 timestamp = 5;
+    uint64 beak_id = 6;
+}

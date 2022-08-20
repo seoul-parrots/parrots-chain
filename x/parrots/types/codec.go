@@ -11,6 +11,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgSetProfile{}, "parrots/SetProfile", nil)
 	cdc.RegisterConcrete(&MsgUploadBeak{}, "parrots/UploadBeak", nil)
 	cdc.RegisterConcrete(&MsgSendRespect{}, "parrots/SendRespect", nil)
+	cdc.RegisterConcrete(&MsgCreateComment{}, "parrots/CreateComment", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -23,6 +24,9 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgSendRespect{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateComment{},
 	)
 	// this line is used by starport scaffolding # 3
 

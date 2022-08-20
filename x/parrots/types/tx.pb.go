@@ -371,6 +371,118 @@ func (m *MsgSendRespectResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgSendRespectResponse proto.InternalMessageInfo
 
+type MsgCreateComment struct {
+	Creator   string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Username  string `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Comment   string `protobuf:"bytes,3,opt,name=comment,proto3" json:"comment,omitempty"`
+	Timestamp uint64 `protobuf:"varint,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	BeakId    uint64 `protobuf:"varint,5,opt,name=beakId,proto3" json:"beakId,omitempty"`
+}
+
+func (m *MsgCreateComment) Reset()         { *m = MsgCreateComment{} }
+func (m *MsgCreateComment) String() string { return proto.CompactTextString(m) }
+func (*MsgCreateComment) ProtoMessage()    {}
+func (*MsgCreateComment) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0cc1e70ed5a30bb3, []int{6}
+}
+func (m *MsgCreateComment) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCreateComment) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCreateComment.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCreateComment) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCreateComment.Merge(m, src)
+}
+func (m *MsgCreateComment) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCreateComment) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCreateComment.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCreateComment proto.InternalMessageInfo
+
+func (m *MsgCreateComment) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgCreateComment) GetUsername() string {
+	if m != nil {
+		return m.Username
+	}
+	return ""
+}
+
+func (m *MsgCreateComment) GetComment() string {
+	if m != nil {
+		return m.Comment
+	}
+	return ""
+}
+
+func (m *MsgCreateComment) GetTimestamp() uint64 {
+	if m != nil {
+		return m.Timestamp
+	}
+	return 0
+}
+
+func (m *MsgCreateComment) GetBeakId() uint64 {
+	if m != nil {
+		return m.BeakId
+	}
+	return 0
+}
+
+type MsgCreateCommentResponse struct {
+}
+
+func (m *MsgCreateCommentResponse) Reset()         { *m = MsgCreateCommentResponse{} }
+func (m *MsgCreateCommentResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgCreateCommentResponse) ProtoMessage()    {}
+func (*MsgCreateCommentResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0cc1e70ed5a30bb3, []int{7}
+}
+func (m *MsgCreateCommentResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCreateCommentResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCreateCommentResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCreateCommentResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCreateCommentResponse.Merge(m, src)
+}
+func (m *MsgCreateCommentResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCreateCommentResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCreateCommentResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCreateCommentResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgSetProfile)(nil), "parrots.parrots.MsgSetProfile")
 	proto.RegisterType((*MsgSetProfileResponse)(nil), "parrots.parrots.MsgSetProfileResponse")
@@ -378,39 +490,45 @@ func init() {
 	proto.RegisterType((*MsgUploadBeakResponse)(nil), "parrots.parrots.MsgUploadBeakResponse")
 	proto.RegisterType((*MsgSendRespect)(nil), "parrots.parrots.MsgSendRespect")
 	proto.RegisterType((*MsgSendRespectResponse)(nil), "parrots.parrots.MsgSendRespectResponse")
+	proto.RegisterType((*MsgCreateComment)(nil), "parrots.parrots.MsgCreateComment")
+	proto.RegisterType((*MsgCreateCommentResponse)(nil), "parrots.parrots.MsgCreateCommentResponse")
 }
 
 func init() { proto.RegisterFile("parrots/tx.proto", fileDescriptor_0cc1e70ed5a30bb3) }
 
 var fileDescriptor_0cc1e70ed5a30bb3 = []byte{
-	// 418 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x93, 0xcf, 0x6e, 0x13, 0x31,
-	0x10, 0xc6, 0xb3, 0xc9, 0x92, 0xb6, 0x53, 0xd1, 0x22, 0x4b, 0x14, 0x2b, 0x42, 0xcb, 0x6a, 0x0f,
-	0x34, 0xa7, 0xad, 0x80, 0x37, 0xc8, 0xad, 0x87, 0x22, 0xb4, 0xb4, 0x42, 0xe2, 0xe6, 0xee, 0x0e,
-	0x91, 0x95, 0xc5, 0x5e, 0xd9, 0x46, 0x4a, 0x1f, 0x01, 0x4e, 0x3c, 0x16, 0xc7, 0x1c, 0x39, 0xa2,
-	0xe4, 0x21, 0xb8, 0x22, 0x3b, 0xde, 0x3f, 0x09, 0x4b, 0x38, 0xad, 0xe7, 0x9b, 0xf1, 0xec, 0x6f,
-	0x3e, 0xdb, 0xf0, 0xa4, 0x62, 0x4a, 0x49, 0xa3, 0xaf, 0xcc, 0x32, 0xad, 0x94, 0x34, 0x92, 0x9c,
-	0x7b, 0x25, 0xf5, 0xdf, 0xe4, 0x6b, 0x00, 0x8f, 0x6f, 0xf4, 0xfc, 0x3d, 0x9a, 0x77, 0x4a, 0x7e,
-	0xe2, 0x25, 0x12, 0x0a, 0x47, 0xb9, 0x42, 0x66, 0xa4, 0xa2, 0x41, 0x1c, 0x4c, 0x4f, 0xb2, 0x3a,
-	0x24, 0x13, 0x38, 0xfe, 0xa2, 0x51, 0x09, 0xf6, 0x19, 0xe9, 0xd0, 0xa5, 0x9a, 0x98, 0xc4, 0x70,
-	0x5a, 0x70, 0x5d, 0x95, 0xec, 0xe1, 0xad, 0x4d, 0x8f, 0x5c, 0xba, 0x2b, 0xb9, 0x0a, 0xd4, 0xb9,
-	0xe2, 0x95, 0xe1, 0x52, 0xd0, 0xd0, 0x57, 0xb4, 0x52, 0x72, 0x09, 0x4f, 0x77, 0x50, 0x32, 0xd4,
-	0x95, 0x14, 0x1a, 0xc9, 0x19, 0x0c, 0x79, 0xe1, 0x68, 0xc2, 0x6c, 0xc8, 0x8b, 0xe4, 0xf7, 0x16,
-	0xfa, 0xae, 0x2a, 0x25, 0x2b, 0x66, 0xc8, 0x16, 0x07, 0xa0, 0x9f, 0xc3, 0x89, 0xed, 0x75, 0x2d,
-	0x0a, 0x5c, 0x7a, 0xea, 0x56, 0x20, 0x04, 0x42, 0xd1, 0xf2, 0xba, 0x35, 0x99, 0xc2, 0xb9, 0xdf,
-	0x7c, 0x57, 0x4f, 0xbb, 0x85, 0xdd, 0x97, 0xf7, 0x47, 0x7a, 0xf4, 0xd7, 0x48, 0x96, 0xab, 0xe4,
-	0x39, 0x0a, 0x8d, 0x74, 0xbc, 0xe5, 0xf2, 0xa1, 0xdd, 0x5b, 0x72, 0xb1, 0x40, 0xc7, 0xaf, 0xe9,
-	0x51, 0x3c, 0x9a, 0x86, 0x59, 0x57, 0xb2, 0x6c, 0x86, 0xcd, 0x35, 0x3d, 0x8e, 0x47, 0x96, 0xcd,
-	0xae, 0xbd, 0x45, 0xed, 0xe0, 0xff, 0xb4, 0x68, 0x06, 0x67, 0xce, 0x4b, 0x51, 0xd8, 0x12, 0xcc,
-	0xcd, 0x01, 0x8b, 0x2e, 0x60, 0x7c, 0x8f, 0x6c, 0x71, 0x5d, 0x38, 0x7f, 0xc2, 0xcc, 0x47, 0x09,
-	0x85, 0x8b, 0xdd, 0x1e, 0xf5, 0xdf, 0x5e, 0x7f, 0x1b, 0xc2, 0xe8, 0x46, 0xcf, 0xc9, 0x2d, 0x40,
-	0xe7, 0xe6, 0x44, 0xe9, 0xde, 0xed, 0x4a, 0x77, 0x8e, 0x73, 0xf2, 0xf2, 0x70, 0xbe, 0x99, 0xe5,
-	0x16, 0xa0, 0x73, 0xb4, 0xbd, 0x5d, 0xdb, 0x7c, 0x7f, 0xd7, 0x1e, 0x87, 0x3e, 0xc0, 0x69, 0xd7,
-	0x8e, 0x17, 0xfd, 0x30, 0x4d, 0xc1, 0xe4, 0xf2, 0x3f, 0x05, 0x75, 0xe3, 0xd9, 0xab, 0x1f, 0xeb,
-	0x28, 0x58, 0xad, 0xa3, 0xe0, 0xd7, 0x3a, 0x0a, 0xbe, 0x6f, 0xa2, 0xc1, 0x6a, 0x13, 0x0d, 0x7e,
-	0x6e, 0xa2, 0xc1, 0xc7, 0x67, 0xf5, 0xfb, 0x5b, 0x5e, 0x35, 0x2f, 0xf1, 0xa1, 0x42, 0x7d, 0x3f,
-	0x76, 0xaf, 0xf1, 0xcd, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xf9, 0x0f, 0x57, 0xce, 0xa1, 0x03,
-	0x00, 0x00,
+	// 489 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x94, 0xcb, 0x6e, 0xd3, 0x40,
+	0x14, 0x86, 0xe3, 0xc4, 0x4d, 0xdb, 0x53, 0xf5, 0x22, 0x4b, 0x94, 0x91, 0x85, 0x4c, 0xf0, 0x82,
+	0x86, 0x4d, 0x2a, 0xe0, 0x0d, 0xd2, 0x55, 0x17, 0x41, 0xc8, 0xb4, 0x42, 0x42, 0x62, 0x31, 0x8d,
+	0x0f, 0xd1, 0x28, 0xf6, 0x8c, 0xe5, 0x19, 0xa4, 0xf4, 0x11, 0xd8, 0xb1, 0xe4, 0x91, 0x58, 0x76,
+	0xc9, 0x12, 0x25, 0x2b, 0x9e, 0x80, 0x2d, 0x9a, 0xc9, 0xf8, 0x16, 0x4c, 0x22, 0xb1, 0xca, 0x9c,
+	0xcb, 0xfc, 0xf9, 0xce, 0xc5, 0x03, 0x67, 0x19, 0xcd, 0x73, 0xa1, 0xe4, 0xa5, 0x5a, 0x8c, 0xb2,
+	0x5c, 0x28, 0xe1, 0x9d, 0x5a, 0xcf, 0xc8, 0xfe, 0x86, 0x5f, 0x1c, 0x38, 0x9e, 0xc8, 0xd9, 0x3b,
+	0x54, 0x6f, 0x73, 0xf1, 0x89, 0x25, 0xe8, 0x11, 0xd8, 0x9f, 0xe6, 0x48, 0x95, 0xc8, 0x89, 0x33,
+	0x70, 0x86, 0x87, 0x51, 0x61, 0x7a, 0x3e, 0x1c, 0x7c, 0x96, 0x98, 0x73, 0x9a, 0x22, 0xe9, 0x9a,
+	0x50, 0x69, 0x7b, 0x03, 0x38, 0x8a, 0x99, 0xcc, 0x12, 0x7a, 0xff, 0x46, 0x87, 0x7b, 0x26, 0x5c,
+	0x77, 0x99, 0x0c, 0x94, 0xd3, 0x9c, 0x65, 0x8a, 0x09, 0x4e, 0x5c, 0x9b, 0x51, 0xb9, 0xc2, 0x0b,
+	0x78, 0xd4, 0x40, 0x89, 0x50, 0x66, 0x82, 0x4b, 0xf4, 0x4e, 0xa0, 0xcb, 0x62, 0x43, 0xe3, 0x46,
+	0x5d, 0x16, 0x87, 0xbf, 0xd7, 0xd0, 0xb7, 0x59, 0x22, 0x68, 0x3c, 0x46, 0x3a, 0xdf, 0x02, 0xfd,
+	0x04, 0x0e, 0xb5, 0xd6, 0x35, 0x8f, 0x71, 0x61, 0xa9, 0x2b, 0x87, 0xe7, 0x81, 0xcb, 0x2b, 0x5e,
+	0x73, 0xf6, 0x86, 0x70, 0x6a, 0x2f, 0xdf, 0x16, 0xd5, 0xae, 0x61, 0x37, 0xdd, 0x9b, 0x25, 0xed,
+	0xfd, 0x55, 0x92, 0xe6, 0x4a, 0xd8, 0x14, 0xb9, 0x44, 0xd2, 0x5f, 0x73, 0x59, 0x53, 0xdf, 0x4d,
+	0x18, 0x9f, 0xa3, 0xe1, 0x97, 0x64, 0x7f, 0xd0, 0x1b, 0xba, 0x51, 0xdd, 0xa5, 0xd9, 0x14, 0x9d,
+	0x49, 0x72, 0x30, 0xe8, 0x69, 0x36, 0x7d, 0xb6, 0x2d, 0xaa, 0x0a, 0xff, 0x67, 0x8b, 0xc6, 0x70,
+	0x62, 0x7a, 0xc9, 0x63, 0x9d, 0x82, 0x53, 0xb5, 0xa5, 0x45, 0xe7, 0xd0, 0xbf, 0x43, 0x3a, 0xbf,
+	0x8e, 0x4d, 0x7f, 0xdc, 0xc8, 0x5a, 0x21, 0x81, 0xf3, 0xa6, 0x46, 0xf1, 0x6f, 0xe1, 0x37, 0x07,
+	0xce, 0x26, 0x72, 0x76, 0xa5, 0x05, 0xf0, 0x4a, 0xa4, 0x29, 0x72, 0xf5, 0x9f, 0x8b, 0xa3, 0x6f,
+	0xad, 0x05, 0xec, 0x10, 0x0a, 0x53, 0x4f, 0x4e, 0xb1, 0x14, 0xa5, 0xa2, 0x69, 0x66, 0x26, 0xe0,
+	0x46, 0x95, 0xa3, 0x06, 0xbd, 0xd7, 0x80, 0xf6, 0x81, 0x6c, 0x92, 0x15, 0xd8, 0xaf, 0x7e, 0x75,
+	0xa1, 0x37, 0x91, 0x33, 0xef, 0x06, 0xa0, 0xb6, 0xf0, 0xc1, 0x68, 0xe3, 0xa3, 0x18, 0x35, 0xb6,
+	0xd0, 0x7f, 0xbe, 0x3d, 0x5e, 0x8e, 0xe0, 0x06, 0xa0, 0xb6, 0x91, 0xad, 0xaa, 0x55, 0xbc, 0x5d,
+	0xb5, 0x65, 0xb0, 0xef, 0xe1, 0xa8, 0x3e, 0xc5, 0xa7, 0xed, 0x30, 0x65, 0x82, 0x7f, 0xb1, 0x23,
+	0xa1, 0x14, 0xfe, 0x08, 0xc7, 0xcd, 0xf9, 0x3d, 0x6b, 0xbb, 0xd9, 0x48, 0xf1, 0x5f, 0xec, 0x4c,
+	0x29, 0xe4, 0xc7, 0x2f, 0xbf, 0x2f, 0x03, 0xe7, 0x61, 0x19, 0x38, 0x3f, 0x97, 0x81, 0xf3, 0x75,
+	0x15, 0x74, 0x1e, 0x56, 0x41, 0xe7, 0xc7, 0x2a, 0xe8, 0x7c, 0x78, 0x5c, 0xbc, 0x4a, 0x8b, 0xcb,
+	0xf2, 0x7d, 0xba, 0xcf, 0x50, 0xde, 0xf5, 0xcd, 0x1b, 0xf5, 0xfa, 0x4f, 0x00, 0x00, 0x00, 0xff,
+	0xff, 0x0a, 0xe5, 0xeb, 0x82, 0xb7, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -428,6 +546,7 @@ type MsgClient interface {
 	SetProfile(ctx context.Context, in *MsgSetProfile, opts ...grpc.CallOption) (*MsgSetProfileResponse, error)
 	UploadBeak(ctx context.Context, in *MsgUploadBeak, opts ...grpc.CallOption) (*MsgUploadBeakResponse, error)
 	SendRespect(ctx context.Context, in *MsgSendRespect, opts ...grpc.CallOption) (*MsgSendRespectResponse, error)
+	CreateComment(ctx context.Context, in *MsgCreateComment, opts ...grpc.CallOption) (*MsgCreateCommentResponse, error)
 }
 
 type msgClient struct {
@@ -465,11 +584,21 @@ func (c *msgClient) SendRespect(ctx context.Context, in *MsgSendRespect, opts ..
 	return out, nil
 }
 
+func (c *msgClient) CreateComment(ctx context.Context, in *MsgCreateComment, opts ...grpc.CallOption) (*MsgCreateCommentResponse, error) {
+	out := new(MsgCreateCommentResponse)
+	err := c.cc.Invoke(ctx, "/parrots.parrots.Msg/CreateComment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	SetProfile(context.Context, *MsgSetProfile) (*MsgSetProfileResponse, error)
 	UploadBeak(context.Context, *MsgUploadBeak) (*MsgUploadBeakResponse, error)
 	SendRespect(context.Context, *MsgSendRespect) (*MsgSendRespectResponse, error)
+	CreateComment(context.Context, *MsgCreateComment) (*MsgCreateCommentResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -484,6 +613,9 @@ func (*UnimplementedMsgServer) UploadBeak(ctx context.Context, req *MsgUploadBea
 }
 func (*UnimplementedMsgServer) SendRespect(ctx context.Context, req *MsgSendRespect) (*MsgSendRespectResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendRespect not implemented")
+}
+func (*UnimplementedMsgServer) CreateComment(ctx context.Context, req *MsgCreateComment) (*MsgCreateCommentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateComment not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -544,6 +676,24 @@ func _Msg_SendRespect_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateComment)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/parrots.parrots.Msg/CreateComment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateComment(ctx, req.(*MsgCreateComment))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "parrots.parrots.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -559,6 +709,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendRespect",
 			Handler:    _Msg_SendRespect_Handler,
+		},
+		{
+			MethodName: "CreateComment",
+			Handler:    _Msg_CreateComment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -822,6 +976,83 @@ func (m *MsgSendRespectResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgCreateComment) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCreateComment) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCreateComment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.BeakId != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.BeakId))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.Timestamp != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Timestamp))
+		i--
+		dAtA[i] = 0x20
+	}
+	if len(m.Comment) > 0 {
+		i -= len(m.Comment)
+		copy(dAtA[i:], m.Comment)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Comment)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Username) > 0 {
+		i -= len(m.Username)
+		copy(dAtA[i:], m.Username)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Username)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgCreateCommentResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCreateCommentResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCreateCommentResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -945,6 +1176,42 @@ func (m *MsgSendRespect) Size() (n int) {
 }
 
 func (m *MsgSendRespectResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgCreateComment) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Username)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Comment)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.Timestamp != 0 {
+		n += 1 + sovTx(uint64(m.Timestamp))
+	}
+	if m.BeakId != 0 {
+		n += 1 + sovTx(uint64(m.BeakId))
+	}
+	return n
+}
+
+func (m *MsgCreateCommentResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1753,6 +2020,240 @@ func (m *MsgSendRespectResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgSendRespectResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCreateComment) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCreateComment: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCreateComment: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Username", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Username = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Comment", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Comment = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Timestamp", wireType)
+			}
+			m.Timestamp = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Timestamp |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BeakId", wireType)
+			}
+			m.BeakId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.BeakId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCreateCommentResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCreateCommentResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCreateCommentResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
