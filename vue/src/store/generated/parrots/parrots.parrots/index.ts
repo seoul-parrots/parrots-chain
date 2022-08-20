@@ -54,6 +54,7 @@ const getDefaultState = () => {
 				GetBeaksByNameSubstring: {},
 				GetBeaksByTag: {},
 				GetRespectedBeaks: {},
+				GetProfileByCreator: {},
 				
 				_Structure: {
 						Profile: getStructure(Profile.fromPartial({})),
@@ -152,6 +153,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.GetRespectedBeaks[JSON.stringify(params)] ?? {}
+		},
+				getGetProfileByCreator: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.GetProfileByCreator[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -461,21 +468,32 @@ export default {
 		},
 		
 		
-		async sendMsgSendRespect({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		
+		 		
+		
+		
+		async QueryGetProfileByCreator({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSendRespect(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSendRespect:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgSendRespect:Send Could not broadcast Tx: '+ e.message)
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryGetProfileByCreator(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryGetProfileByCreator({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
 				}
+				commit('QUERY', { query: 'GetProfileByCreator', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryGetProfileByCreator', payload: { options: { all }, params: {...key},query }})
+				return getters['getGetProfileByCreator']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryGetProfileByCreator API Node Unavailable. Could not perform query: ' + e.message)
+				
 			}
 		},
+		
+		
 		async sendMsgSetProfile({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -506,20 +524,22 @@ export default {
 				}
 			}
 		},
-		
-		async MsgSendRespect({ rootGetters }, { value }) {
+		async sendMsgSendRespect({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgSendRespect(value)
-				return msg
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgSendRespect:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgSendRespect:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgSendRespect:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgSetProfile({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -543,6 +563,19 @@ export default {
 					throw new Error('TxClient:MsgUploadBeak:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgUploadBeak:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgSendRespect({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSendRespect(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSendRespect:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgSendRespect:Create Could not create message: ' + e.message)
 				}
 			}
 		},

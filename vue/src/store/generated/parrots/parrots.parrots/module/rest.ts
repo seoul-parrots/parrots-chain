@@ -106,6 +106,10 @@ export interface ParrotsQueryGetBeaksCountResponse {
   count?: string;
 }
 
+export interface ParrotsQueryGetProfileByCreatorResponse {
+  profile?: ParrotsProfile;
+}
+
 export interface ParrotsQueryGetProfileByUsernameResponse {
   profile?: ParrotsProfile;
 }
@@ -551,6 +555,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryGetProfile = (query?: { id?: string }, params: RequestParams = {}) =>
     this.request<ParrotsQueryGetProfileResponse, RpcStatus>({
       path: `/parrots/parrots/get_profile`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryGetProfileByCreator
+   * @summary Queries a list of GetProfileByCreator items.
+   * @request GET:/parrots/parrots/get_profile_by_creator
+   */
+  queryGetProfileByCreator = (query?: { creator?: string }, params: RequestParams = {}) =>
+    this.request<ParrotsQueryGetProfileByCreatorResponse, RpcStatus>({
+      path: `/parrots/parrots/get_profile_by_creator`,
       method: "GET",
       query: query,
       format: "json",

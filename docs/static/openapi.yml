@@ -30310,6 +30310,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /parrots/parrots/get_beak_by_id:
@@ -30516,6 +30526,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /parrots/parrots/get_beaks_by_tag:
@@ -30656,6 +30676,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /parrots/parrots/get_beaks_count:
@@ -30744,6 +30774,60 @@ paths:
           required: false
           type: string
           format: uint64
+      tags:
+        - Query
+  /parrots/parrots/get_profile_by_creator:
+    get:
+      summary: Queries a list of GetProfileByCreator items.
+      operationId: ParrotsParrotsGetProfileByCreator
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              profile:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  creator:
+                    type: string
+                  username:
+                    type: string
+                  display_name:
+                    type: string
+                  description:
+                    type: string
+                  respectedBeaks:
+                    type: array
+                    items:
+                      type: string
+                      format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: creator
+          in: query
+          required: false
+          type: string
       tags:
         - Query
   /parrots/parrots/get_profile_by_username:
@@ -31051,6 +31135,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -52756,6 +52850,28 @@ definitions:
       count:
         type: string
         format: uint64
+  parrots.parrots.QueryGetProfileByCreatorResponse:
+    type: object
+    properties:
+      profile:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          creator:
+            type: string
+          username:
+            type: string
+          display_name:
+            type: string
+          description:
+            type: string
+          respectedBeaks:
+            type: array
+            items:
+              type: string
+              format: uint64
   parrots.parrots.QueryGetProfileByUsernameResponse:
     type: object
     properties:
