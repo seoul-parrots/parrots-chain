@@ -42,6 +42,14 @@ export interface QueryGetProfileResponse {
   profile: Profile | undefined;
 }
 
+export interface QueryGetProfileByUsernameRequest {
+  username: string;
+}
+
+export interface QueryGetProfileByUsernameResponse {
+  profile: Profile | undefined;
+}
+
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
@@ -559,6 +567,147 @@ export const QueryGetProfileResponse = {
   },
 };
 
+const baseQueryGetProfileByUsernameRequest: object = { username: "" };
+
+export const QueryGetProfileByUsernameRequest = {
+  encode(
+    message: QueryGetProfileByUsernameRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.username !== "") {
+      writer.uint32(10).string(message.username);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetProfileByUsernameRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetProfileByUsernameRequest,
+    } as QueryGetProfileByUsernameRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.username = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetProfileByUsernameRequest {
+    const message = {
+      ...baseQueryGetProfileByUsernameRequest,
+    } as QueryGetProfileByUsernameRequest;
+    if (object.username !== undefined && object.username !== null) {
+      message.username = String(object.username);
+    } else {
+      message.username = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetProfileByUsernameRequest): unknown {
+    const obj: any = {};
+    message.username !== undefined && (obj.username = message.username);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetProfileByUsernameRequest>
+  ): QueryGetProfileByUsernameRequest {
+    const message = {
+      ...baseQueryGetProfileByUsernameRequest,
+    } as QueryGetProfileByUsernameRequest;
+    if (object.username !== undefined && object.username !== null) {
+      message.username = object.username;
+    } else {
+      message.username = "";
+    }
+    return message;
+  },
+};
+
+const baseQueryGetProfileByUsernameResponse: object = {};
+
+export const QueryGetProfileByUsernameResponse = {
+  encode(
+    message: QueryGetProfileByUsernameResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.profile !== undefined) {
+      Profile.encode(message.profile, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetProfileByUsernameResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetProfileByUsernameResponse,
+    } as QueryGetProfileByUsernameResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.profile = Profile.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetProfileByUsernameResponse {
+    const message = {
+      ...baseQueryGetProfileByUsernameResponse,
+    } as QueryGetProfileByUsernameResponse;
+    if (object.profile !== undefined && object.profile !== null) {
+      message.profile = Profile.fromJSON(object.profile);
+    } else {
+      message.profile = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetProfileByUsernameResponse): unknown {
+    const obj: any = {};
+    message.profile !== undefined &&
+      (obj.profile = message.profile
+        ? Profile.toJSON(message.profile)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetProfileByUsernameResponse>
+  ): QueryGetProfileByUsernameResponse {
+    const message = {
+      ...baseQueryGetProfileByUsernameResponse,
+    } as QueryGetProfileByUsernameResponse;
+    if (object.profile !== undefined && object.profile !== null) {
+      message.profile = Profile.fromPartial(object.profile);
+    } else {
+      message.profile = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -573,6 +722,10 @@ export interface Query {
   ): Promise<QueryProfileCountResponse>;
   /** Queries a list of GetProfile items. */
   GetProfile(request: QueryGetProfileRequest): Promise<QueryGetProfileResponse>;
+  /** Queries a list of GetProfileByUsername items. */
+  GetProfileByUsername(
+    request: QueryGetProfileByUsernameRequest
+  ): Promise<QueryGetProfileByUsernameResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -625,6 +778,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryGetProfileResponse.decode(new Reader(data))
+    );
+  }
+
+  GetProfileByUsername(
+    request: QueryGetProfileByUsernameRequest
+  ): Promise<QueryGetProfileByUsernameResponse> {
+    const data = QueryGetProfileByUsernameRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "parrots.parrots.Query",
+      "GetProfileByUsername",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetProfileByUsernameResponse.decode(new Reader(data))
     );
   }
 }

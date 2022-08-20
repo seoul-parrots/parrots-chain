@@ -47,6 +47,7 @@ const getDefaultState = () => {
 				GetProfiles: {},
 				ProfileCount: {},
 				GetProfile: {},
+				GetProfileByUsername: {},
 				
 				_Structure: {
 						Profile: getStructure(Profile.fromPartial({})),
@@ -103,6 +104,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.GetProfile[JSON.stringify(params)] ?? {}
+		},
+				getGetProfileByUsername: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.GetProfileByUsername[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -229,6 +236,32 @@ export default {
 				return getters['getGetProfile']( { params: {...key}, query}) ?? {}
 			} catch (e) {
 				throw new Error('QueryClient:QueryGetProfile API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryGetProfileByUsername({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryGetProfileByUsername(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryGetProfileByUsername({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'GetProfileByUsername', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryGetProfileByUsername', payload: { options: { all }, params: {...key},query }})
+				return getters['getGetProfileByUsername']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryGetProfileByUsername API Node Unavailable. Could not perform query: ' + e.message)
 				
 			}
 		},

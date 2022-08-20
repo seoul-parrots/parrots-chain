@@ -32,6 +32,11 @@ service Query {
 		option (google.api.http).get = "/parrots/parrots/get_profile";
 	}
 
+// Queries a list of GetProfileByUsername items.
+	rpc GetProfileByUsername(QueryGetProfileByUsernameRequest) returns (QueryGetProfileByUsernameResponse) {
+		option (google.api.http).get = "/parrots/parrots/get_profile_by_username";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -65,6 +70,14 @@ message QueryGetProfileRequest {
 }
 
 message QueryGetProfileResponse {
+  Profile profile = 1;
+}
+
+message QueryGetProfileByUsernameRequest {
+  string username = 1;
+}
+
+message QueryGetProfileByUsernameResponse {
   Profile profile = 1;
 }
 

@@ -29,6 +29,10 @@ export interface ParrotsProfile {
   respectedBeaks?: string[];
 }
 
+export interface ParrotsQueryGetProfileByUsernameResponse {
+  profile?: ParrotsProfile;
+}
+
 export interface ParrotsQueryGetProfileResponse {
   profile?: ParrotsProfile;
 }
@@ -109,6 +113,13 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
+
+  /**
+   * reverse is set to true if results are to be returned in the descending order.
+   *
+   * Since: cosmos-sdk 0.43
+   */
+  reverse?: boolean;
 }
 
 /**
@@ -345,6 +356,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
+   * @name QueryGetProfileByUsername
+   * @summary Queries a list of GetProfileByUsername items.
+   * @request GET:/parrots/parrots/get_profile_by_username
+   */
+  queryGetProfileByUsername = (query?: { username?: string }, params: RequestParams = {}) =>
+    this.request<ParrotsQueryGetProfileByUsernameResponse, RpcStatus>({
+      path: `/parrots/parrots/get_profile_by_username`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
    * @name QueryParams
    * @summary Parameters queries the parameters of the module.
    * @request GET:/parrots/parrots/params
@@ -371,6 +399,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>

@@ -30230,6 +30230,59 @@ paths:
           format: uint64
       tags:
         - Query
+  /parrots/parrots/get_profile_by_username:
+    get:
+      summary: Queries a list of GetProfileByUsername items.
+      operationId: ParrotsParrotsGetProfileByUsername
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              profile:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  creator:
+                    type: string
+                  username:
+                    type: string
+                  display_name:
+                    type: string
+                  description:
+                    type: string
+                  respectedBeaks:
+                    type: array
+                    items:
+                      type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: username
+          in: query
+          required: false
+          type: string
+      tags:
+        - Query
   /parrots/parrots/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -30385,16 +30438,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -51842,6 +51885,27 @@ definitions:
         type: array
         items:
           type: string
+  parrots.parrots.QueryGetProfileByUsernameResponse:
+    type: object
+    properties:
+      profile:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          creator:
+            type: string
+          username:
+            type: string
+          display_name:
+            type: string
+          description:
+            type: string
+          respectedBeaks:
+            type: array
+            items:
+              type: string
   parrots.parrots.QueryGetProfileResponse:
     type: object
     properties:
