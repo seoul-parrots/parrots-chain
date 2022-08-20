@@ -9,6 +9,19 @@
  * ---------------------------------------------------------------
  */
 
+export interface ParrotsBeak {
+  /** @format uint64 */
+  id?: string;
+  creator?: string;
+  file_index?: string;
+  name?: string;
+  creator_username?: string;
+  description?: string;
+  license?: string;
+  linked_beaks?: string[];
+  tags?: string[];
+}
+
 export interface ParrotsMsgSetProfileResponse {
   /** @format uint64 */
   id?: string;
@@ -32,6 +45,21 @@ export interface ParrotsProfile {
   display_name?: string;
   description?: string;
   respectedBeaks?: string[];
+}
+
+export interface ParrotsQueryGetAllBeaksResponse {
+  beaks?: ParrotsBeak[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
 }
 
 export interface ParrotsQueryGetBeaksCountResponse {
@@ -123,6 +151,13 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
+
+  /**
+   * reverse is set to true if results are to be returned in the descending order.
+   *
+   * Since: cosmos-sdk 0.43
+   */
+  reverse?: boolean;
 }
 
 /**
@@ -342,6 +377,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
+   * @name QueryGetAllBeaks
+   * @summary Queries a list of GetAllBeaks items.
+   * @request GET:/parrots/parrots/get_all_beaks
+   */
+  queryGetAllBeaks = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<ParrotsQueryGetAllBeaksResponse, RpcStatus>({
+      path: `/parrots/parrots/get_all_beaks`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
    * @name QueryGetBeaksCount
    * @summary Queries a list of GetBeaksCount items.
    * @request GET:/parrots/parrots/get_beaks_count
@@ -418,6 +479,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>

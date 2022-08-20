@@ -42,6 +42,11 @@ service Query {
 		option (google.api.http).get = "/parrots/parrots/get_beaks_count";
 	}
 
+// Queries a list of GetAllBeaks items.
+	rpc GetAllBeaks(QueryGetAllBeaksRequest) returns (QueryGetAllBeaksResponse) {
+		option (google.api.http).get = "/parrots/parrots/get_all_beaks";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -91,6 +96,15 @@ message QueryGetBeaksCountRequest {
 
 message QueryGetBeaksCountResponse {
   uint64 count = 1;
+}
+
+message QueryGetAllBeaksRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryGetAllBeaksResponse {
+  repeated Beak beaks = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

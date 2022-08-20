@@ -49,6 +49,7 @@ const getDefaultState = () => {
 				GetProfile: {},
 				GetProfileByUsername: {},
 				GetBeaksCount: {},
+				GetAllBeaks: {},
 				
 				_Structure: {
 						Profile: getStructure(Profile.fromPartial({})),
@@ -117,6 +118,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.GetBeaksCount[JSON.stringify(params)] ?? {}
+		},
+				getGetAllBeaks: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.GetAllBeaks[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -291,6 +298,32 @@ export default {
 				return getters['getGetBeaksCount']( { params: {...key}, query}) ?? {}
 			} catch (e) {
 				throw new Error('QueryClient:QueryGetBeaksCount API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryGetAllBeaks({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryGetAllBeaks(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryGetAllBeaks({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'GetAllBeaks', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryGetAllBeaks', payload: { options: { all }, params: {...key},query }})
+				return getters['getGetAllBeaks']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryGetAllBeaks API Node Unavailable. Could not perform query: ' + e.message)
 				
 			}
 		},
