@@ -9,6 +9,8 @@ import (
 	"github.com/lithammer/fuzzysearch/fuzzy"
 
 	"parrots/x/parrots/types"
+
+	"golang.org/x/exp/slices"
 )
 
 // AddBeak adds beak object to the blockchain.
@@ -72,6 +74,24 @@ func (k Keeper) GetEveryBeakByNameSubstring(ctx sdk.Context, name string) ([]*ty
 	var result []*types.Beak
 	for _, beak := range beaks {
 		if fuzzy.Match(name, beak.Name) {
+			result = append(result, beak)
+		}
+	}
+
+	return result, nil
+}
+
+// GetBeaksByTag fetches beaks object from blockchain.
+func (k Keeper) GetEveryBeakByTag(ctx sdk.Context, tag string) ([]*types.Beak, error) {
+	beaks, err := k.GetEveryBeak(ctx)
+	if err != nil {
+		return nil, errors.New("internal error")
+	}
+
+	var result []*types.Beak
+	for _, beak := range beaks {
+		idx := slices.IndexFunc(beak.Tags, func(beakTag string) bool { return beakTag == tag })
+		if idx >= 0 {
 			result = append(result, beak)
 		}
 	}

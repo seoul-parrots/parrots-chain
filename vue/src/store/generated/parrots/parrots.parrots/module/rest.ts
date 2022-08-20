@@ -81,6 +81,21 @@ export interface ParrotsQueryGetBeaksByNameSubstringResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface ParrotsQueryGetBeaksByTagResponse {
+  beaks?: ParrotsBeak[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface ParrotsQueryGetBeaksCountResponse {
   /** @format uint64 */
   count?: string;
@@ -456,6 +471,33 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   ) =>
     this.request<ParrotsQueryGetBeaksByNameSubstringResponse, RpcStatus>({
       path: `/parrots/parrots/get_beaks_by_name_substring`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryGetBeaksByTag
+   * @summary Queries a list of GetBeaksByTag items.
+   * @request GET:/parrots/parrots/get_beaks_by_tag
+   */
+  queryGetBeaksByTag = (
+    query?: {
+      tag?: string;
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<ParrotsQueryGetBeaksByTagResponse, RpcStatus>({
+      path: `/parrots/parrots/get_beaks_by_tag`,
       method: "GET",
       query: query,
       format: "json",

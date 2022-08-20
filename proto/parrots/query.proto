@@ -57,6 +57,11 @@ service Query {
 		option (google.api.http).get = "/parrots/parrots/get_beaks_by_name_substring";
 	}
 
+// Queries a list of GetBeaksByTag items.
+	rpc GetBeaksByTag(QueryGetBeaksByTagRequest) returns (QueryGetBeaksByTagResponse) {
+		option (google.api.http).get = "/parrots/parrots/get_beaks_by_tag";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -133,6 +138,16 @@ message QueryGetBeaksByNameSubstringRequest {
 message QueryGetBeaksByNameSubstringResponse {
   repeated Beak beaks = 1;
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetBeaksByTagRequest {
+	string tag = 1;
+	cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryGetBeaksByTagResponse {
+	repeated Beak beaks = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3
