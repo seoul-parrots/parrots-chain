@@ -62,6 +62,10 @@ export interface ParrotsQueryGetAllBeaksResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface ParrotsQueryGetBeakByIdResponse {
+  beak?: ParrotsBeak;
+}
+
 export interface ParrotsQueryGetBeaksCountResponse {
   /** @format uint64 */
   count?: string;
@@ -151,13 +155,6 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
-
-  /**
-   * reverse is set to true if results are to be returned in the descending order.
-   *
-   * Since: cosmos-sdk 0.43
-   */
-  reverse?: boolean;
 }
 
 /**
@@ -387,12 +384,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
     this.request<ParrotsQueryGetAllBeaksResponse, RpcStatus>({
       path: `/parrots/parrots/get_all_beaks`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryGetBeakById
+   * @summary Queries a list of GetBeakById items.
+   * @request GET:/parrots/parrots/get_beak_by_id
+   */
+  queryGetBeakById = (query?: { id?: string }, params: RequestParams = {}) =>
+    this.request<ParrotsQueryGetBeakByIdResponse, RpcStatus>({
+      path: `/parrots/parrots/get_beak_by_id`,
       method: "GET",
       query: query,
       format: "json",
@@ -479,7 +492,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
