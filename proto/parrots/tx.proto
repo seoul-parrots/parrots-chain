@@ -45,7 +45,7 @@ message MsgSendRespect {
 }
 
 message MsgSendRespectResponse {
-  uint64 respectCount = 1;
+  
 }
 
 // this line is used by starport scaffolding # proto/tx/message

@@ -35,9 +35,7 @@ export interface MsgSendRespect {
   beakId: number;
 }
 
-export interface MsgSendRespectResponse {
-  respectCount: number;
-}
+export interface MsgSendRespectResponse {}
 
 const baseMsgSetProfile: object = {
   creator: "",
@@ -558,16 +556,10 @@ export const MsgSendRespect = {
   },
 };
 
-const baseMsgSendRespectResponse: object = { respectCount: 0 };
+const baseMsgSendRespectResponse: object = {};
 
 export const MsgSendRespectResponse = {
-  encode(
-    message: MsgSendRespectResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
-    if (message.respectCount !== 0) {
-      writer.uint32(8).uint64(message.respectCount);
-    }
+  encode(_: MsgSendRespectResponse, writer: Writer = Writer.create()): Writer {
     return writer;
   },
 
@@ -578,9 +570,6 @@ export const MsgSendRespectResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.respectCount = longToNumber(reader.uint64() as Long);
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -589,32 +578,18 @@ export const MsgSendRespectResponse = {
     return message;
   },
 
-  fromJSON(object: any): MsgSendRespectResponse {
+  fromJSON(_: any): MsgSendRespectResponse {
     const message = { ...baseMsgSendRespectResponse } as MsgSendRespectResponse;
-    if (object.respectCount !== undefined && object.respectCount !== null) {
-      message.respectCount = Number(object.respectCount);
-    } else {
-      message.respectCount = 0;
-    }
     return message;
   },
 
-  toJSON(message: MsgSendRespectResponse): unknown {
+  toJSON(_: MsgSendRespectResponse): unknown {
     const obj: any = {};
-    message.respectCount !== undefined &&
-      (obj.respectCount = message.respectCount);
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<MsgSendRespectResponse>
-  ): MsgSendRespectResponse {
+  fromPartial(_: DeepPartial<MsgSendRespectResponse>): MsgSendRespectResponse {
     const message = { ...baseMsgSendRespectResponse } as MsgSendRespectResponse;
-    if (object.respectCount !== undefined && object.respectCount !== null) {
-      message.respectCount = object.respectCount;
-    } else {
-      message.respectCount = 0;
-    }
     return message;
   },
 };
