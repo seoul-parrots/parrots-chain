@@ -1,10 +1,35 @@
 accounts:
-  - name: alice
+  - name: oliver
     coins: ["20000token", "200000000stake"]
-  - name: bob
+  - name: harry
     coins: ["10000token", "100000000stake"]
+  - name: liam
+    coins: ["10000token", "100000000stake"]
+  - name: lucas
+    coins: ["10000token", "100000000stake"]
+  - name: declan
+    coins: ["10000token", "100000000stake"]
+  - name: elliot
+    coins: ["10000token", "100000000stake"]
+  - name: owen
+    coins: ["10000token", "100000000stake"]
+  - name: oskar
+    coins: ["10000token", "100000000stake"]
+  - name: hazel
+    coins: ["20000token", "200000000stake"]
+  - name: lily
+    coins: ["10000token", "100000000stake"]
+  - name: sophia
+    coins: ["10000token", "100000000stake"]
+  - name: isabella
+    coins: ["10000token", "100000000stake"]
+  - name: zoe
+    coins: ["10000token", "100000000stake"]
+  - name: aria
+    coins: ["10000token", "100000000stake"]
+  
 validator:
-  name: alice
+  name: oliver
   staked: "100000000stake"
 client:
   openapi:
@@ -12,5 +37,5 @@ client:
   vuex:
     path: "vue/src/store"
 faucet:
-  name: bob
+  name: harry
   coins: ["5token", "100000stake"]

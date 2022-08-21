@@ -1,0 +1,31 @@
+# SET PROFILE
+parrotsd tx parrots set-profile "oliver" ".oliver3" "I like music composition and I think jazz is the most attractive genre." --from oliver --yes
+parrotsd tx parrots set-profile "harry" "_harry__" "I think everyone in the world should listen to my music. Please listen and leave your comments" --from harry --yes
+parrotsd tx parrots set-profile "liam" "fyl_liam12" "I want many people to get inspiration through my Beak." --from liam --yes
+parrotsd tx parrots set-profile "lucas" "__king._.lucas" "Let's go" --from lucas --yes
+parrotsd tx parrots set-profile "declan" "ddddeclan" "\"Music can change the world because it can change people\" -Bono" --from declan --yes
+parrotsd tx parrots set-profile "elliot" "elt" "If there's anyone who likes music more than me, come out" --from elliot --yes
+parrotsd tx parrots set-profile "owen" "owenowen" "There is always a better way." --from owen --yes
+parrotsd tx parrots set-profile "oskar" "o__skar" "Fear of failure is the father of failure." --from oskar --yes
+parrotsd tx parrots set-profile "hazel" "happyhazel" "Do not let what you cannot do interfere with what you can do." --from hazel --yes
+parrotsd tx parrots set-profile "lily" "iamlily" "Concentrated thoughts produce desired results." --from lily --yes
+parrotsd tx parrots set-profile "sophia" "sophia" "It is much more difficult to judge oneself than to judge others." --from sophia --yes
+
+# UPLOAD BEAK
+parrotsd tx parrots upload-beak "99a78c59-c734-4ab2-a3ae-91c6d263c6f3.mp3" "Awesome guitar leaps" "oliver" ".oliver3" "Just feeling great now hehehe" "by-nc" "1,2" "R&B,K-Pop" --from oliver --yes
+parrotsd tx parrots upload-beak "99a78c59-c734-4ab2-a3ae-91c6d263c6f3.mp3" "Suddenly got some ideas" "oliver" ".oliver3" "This was uploaded by Keplr Wallet" "by-nd" "2,4" "Game,K-Pop" --from oliver --yes
+parrotsd tx parrots upload-beak "99a78c59-c734-4ab2-a3ae-91c6d263c6f3.mp3" "Moods like sunshine" "oliver" ".oliver3" "This was uploaded by Keplr Wallet" "by-nd" "1,2,3" "R&B,Jazz" --from oliver --yes
+parrotsd tx parrots upload-beak "99a78c59-c734-4ab2-a3ae-91c6d263c6f3.mp3" "raining outside..." "oliver" ".oliver3" "This was uploaded by Keplr Wallet" "by-nd" "1,2,3" "Jazz,Game" --from oliver --yes
+parrotsd tx parrots upload-beak "61a24a17-1105-422c-91d9-9e76a5691b44.mp3" "Feeling warm inside the house" "oliver" ".oliver3" "This was uploaded by Keplr Wallet" "by-nd" "2,3" "Dance,Game,Electronic" --from oliver --yes
+parrotsd tx parrots upload-beak "61a24a17-1105-422c-91d9-9e76a5691b44.mp3" "Snowy snowy winter!" "liam" "fyl_liam12" "This was uploaded by Keplr Wallet" "by-nd" "1,3" "Ambient,R&B" --from liam --yes
+parrotsd tx parrots upload-beak "61a24a17-1105-422c-91d9-9e76a5691b44.mp3" "IU - Good Day -- Liam Remix" "liam" "fyl_liam12" "This was uploaded by Keplr Wallet" "by-nd" "1,3" "Ambient,R&B" --from liam --yes
+parrotsd tx parrots upload-beak "61a24a17-1105-422c-91d9-9e76a5691b44.mp3" "Marshmallow is the all-time best DJ" "liam" "fyl_liam12" "This was uploaded by Keplr Wallet" "by-nd" "1,3" "Ambient,R&B" --from liam --yes
+parrotsd tx parrots upload-beak "61a24a17-1105-422c-91d9-9e76a5691b44.mp3" "Shitty drives on EDM" "harry" "_harry__" "This was uploaded by Keplr Wallet" "by-nd" "1,2,3" "Ambient,R&B" --from harry --yes
+parrotsd tx parrots upload-beak "61a24a17-1105-422c-91d9-9e76a5691b44.mp3" "Shiny sky makes me feel great" "harry" "_harry__" "Just feeling great now hehehe" "by-nd" "2,3" "Game,K-Pop" --from harry --yes
+parrotsd tx parrots upload-beak "61a24a17-1105-422c-91d9-9e76a5691b44.mp3" "Pro hummer!" "harry" "_harry__" "Just feeling great now hehehe" "by-nd" "1,3" "Game,K-Pop" --from harry --yes
+parrotsd tx parrots upload-beak "61a24a17-1105-422c-91d9-9e76a5691b44.mp3" "Elliot Mixset! still learning tho" "elliot" "elt" "Just feeling great now hehehe" "by-nd" "1,2,3" "Game,K-Pop" --from elliot --yes
+parrotsd tx parrots upload-beak "99a78c59-c734-4ab2-a3ae-91c6d263c6f3.mp3" "Maybe the first upload for me" "lucas" "__king._.lucas" "Just feeling great now hehehe" "by-nd" "3" "Dance,Game,Electronic" --from lucas --yes
+parrotsd tx parrots upload-beak "99a78c59-c734-4ab2-a3ae-91c6d263c6f3.mp3" "Hello from Korea!" "lucas" "__king._.lucas" "Just feeling great now hehehe" "by-nd" "1,2,3" "R&B,K-Pop" --from lucas --yes
+parrotsd tx parrots upload-beak "99a78c59-c734-4ab2-a3ae-91c6d263c6f3.mp3" "Pray for Ukraine" "lucas" "__king._.lucas" "Just feeling great now hehehe" "by-nd" "3,4" "Dance,Game,Electronic" --from lucas --yes
+parrotsd tx parrots upload-beak "99a78c59-c734-4ab2-a3ae-91c6d263c6f3.mp3" "Saving money for the better DJ tools" "declan" "__king._.lucas" "Just feeling great now hehehe" "by-nd" "1,2,3" "R&B,K-Pop" --from declan --yes
+parrotsd tx parrots upload-beak "99a78c59-c734-4ab2-a3ae-91c6d263c6f3.mp3" "My new mixer just arrived!" "declan" "__king._.lucas" "Just feeling great now hehehe" "by-nd" "2,3" "R&B,K-Pop" --from declan --yes
