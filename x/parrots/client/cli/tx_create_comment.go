@@ -15,14 +15,14 @@ var _ = strconv.Itoa(0)
 
 func CmdCreateComment() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-comment [name] [display-name] [comment] [timestamp] [beak-id]",
+		Use:   "create-comment [name] [display-name] [comment] [beak-id]",
 		Short: "Broadcast message createComment",
 		Args:  cobra.ExactArgs(4),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argName := args[0]
 			argDisplayName := args[1]
 			argComment := args[2]
-			argBeakId, err := strconv.ParseUint(args[2], 10, 64)
+			argBeakId, err := strconv.ParseUint(args[3], 10, 64)
 			if err != nil {
 				return err
 			}
