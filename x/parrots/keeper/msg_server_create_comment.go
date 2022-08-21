@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"time"
 
 	"parrots/x/parrots/types"
 
@@ -15,7 +16,7 @@ func (k msgServer) CreateComment(goCtx context.Context, msg *types.MsgCreateComm
 		Creator:   msg.Creator,
 		Username:  msg.Username,
 		Comment:   msg.Comment,
-		Timestamp: msg.Timestamp,
+		CreatedAt: time.Now().Unix(),
 		BeakId:    msg.BeakId,
 	}
 

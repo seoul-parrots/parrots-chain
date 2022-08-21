@@ -30209,6 +30209,9 @@ paths:
                     respect_count:
                       type: string
                       format: uint64
+                    created_at:
+                      type: string
+                      format: int64
                     linked_beaks:
                       type: array
                       items:
@@ -30310,6 +30313,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /parrots/parrots/get_beak_by_id:
@@ -30343,6 +30356,9 @@ paths:
                   respect_count:
                     type: string
                     format: uint64
+                  created_at:
+                    type: string
+                    format: int64
                   linked_beaks:
                     type: array
                     items:
@@ -30411,6 +30427,9 @@ paths:
                     respect_count:
                       type: string
                       format: uint64
+                    created_at:
+                      type: string
+                      format: int64
                     linked_beaks:
                       type: array
                       items:
@@ -30516,6 +30535,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /parrots/parrots/get_beaks_by_tag:
@@ -30551,6 +30580,9 @@ paths:
                     respect_count:
                       type: string
                       format: uint64
+                    created_at:
+                      type: string
+                      format: int64
                     linked_beaks:
                       type: array
                       items:
@@ -30656,6 +30688,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /parrots/parrots/get_beaks_count:
@@ -30715,9 +30757,9 @@ paths:
                       type: string
                     comment:
                       type: string
-                    timestamp:
+                    created_at:
                       type: string
-                      format: uint64
+                      format: int64
                     beak_id:
                       type: string
                       format: uint64
@@ -30988,6 +31030,9 @@ paths:
                     respect_count:
                       type: string
                       format: uint64
+                    created_at:
+                      type: string
+                      format: int64
                     linked_beaks:
                       type: array
                       items:
@@ -31206,6 +31251,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -52647,6 +52702,9 @@ definitions:
       respect_count:
         type: string
         format: uint64
+      created_at:
+        type: string
+        format: int64
       linked_beaks:
         type: array
         items:
@@ -52668,9 +52726,9 @@ definitions:
         type: string
       comment:
         type: string
-      timestamp:
+      created_at:
         type: string
-        format: uint64
+        format: int64
       beak_id:
         type: string
         format: uint64
@@ -52738,6 +52796,9 @@ definitions:
             respect_count:
               type: string
               format: uint64
+            created_at:
+              type: string
+              format: int64
             linked_beaks:
               type: array
               items:
@@ -52796,6 +52857,9 @@ definitions:
           respect_count:
             type: string
             format: uint64
+          created_at:
+            type: string
+            format: int64
           linked_beaks:
             type: array
             items:
@@ -52831,6 +52895,9 @@ definitions:
             respect_count:
               type: string
               format: uint64
+            created_at:
+              type: string
+              format: int64
             linked_beaks:
               type: array
               items:
@@ -52891,6 +52958,9 @@ definitions:
             respect_count:
               type: string
               format: uint64
+            created_at:
+              type: string
+              format: int64
             linked_beaks:
               type: array
               items:
@@ -52948,9 +53018,9 @@ definitions:
               type: string
             comment:
               type: string
-            timestamp:
+            created_at:
               type: string
-              format: uint64
+              format: int64
             beak_id:
               type: string
               format: uint64
@@ -53120,6 +53190,9 @@ definitions:
             respect_count:
               type: string
               format: uint64
+            created_at:
+              type: string
+              format: int64
             linked_beaks:
               type: array
               items:

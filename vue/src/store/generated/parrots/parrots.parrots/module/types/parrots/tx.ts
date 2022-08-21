@@ -41,7 +41,6 @@ export interface MsgCreateComment {
   creator: string;
   username: string;
   comment: string;
-  timestamp: number;
   beakId: number;
 }
 
@@ -608,7 +607,6 @@ const baseMsgCreateComment: object = {
   creator: "",
   username: "",
   comment: "",
-  timestamp: 0,
   beakId: 0,
 };
 
@@ -623,11 +621,8 @@ export const MsgCreateComment = {
     if (message.comment !== "") {
       writer.uint32(26).string(message.comment);
     }
-    if (message.timestamp !== 0) {
-      writer.uint32(32).uint64(message.timestamp);
-    }
     if (message.beakId !== 0) {
-      writer.uint32(40).uint64(message.beakId);
+      writer.uint32(32).uint64(message.beakId);
     }
     return writer;
   },
@@ -649,9 +644,6 @@ export const MsgCreateComment = {
           message.comment = reader.string();
           break;
         case 4:
-          message.timestamp = longToNumber(reader.uint64() as Long);
-          break;
-        case 5:
           message.beakId = longToNumber(reader.uint64() as Long);
           break;
         default:
@@ -679,11 +671,6 @@ export const MsgCreateComment = {
     } else {
       message.comment = "";
     }
-    if (object.timestamp !== undefined && object.timestamp !== null) {
-      message.timestamp = Number(object.timestamp);
-    } else {
-      message.timestamp = 0;
-    }
     if (object.beakId !== undefined && object.beakId !== null) {
       message.beakId = Number(object.beakId);
     } else {
@@ -697,7 +684,6 @@ export const MsgCreateComment = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.username !== undefined && (obj.username = message.username);
     message.comment !== undefined && (obj.comment = message.comment);
-    message.timestamp !== undefined && (obj.timestamp = message.timestamp);
     message.beakId !== undefined && (obj.beakId = message.beakId);
     return obj;
   },
@@ -718,11 +704,6 @@ export const MsgCreateComment = {
       message.comment = object.comment;
     } else {
       message.comment = "";
-    }
-    if (object.timestamp !== undefined && object.timestamp !== null) {
-      message.timestamp = object.timestamp;
-    } else {
-      message.timestamp = 0;
     }
     if (object.beakId !== undefined && object.beakId !== null) {
       message.beakId = object.beakId;

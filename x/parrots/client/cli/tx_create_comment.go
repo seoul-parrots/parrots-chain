@@ -17,15 +17,11 @@ func CmdCreateComment() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create-comment [name] [comment] [timestamp] [beak-id]",
 		Short: "Broadcast message createComment",
-		Args:  cobra.ExactArgs(4),
+		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argName := args[0]
 			argComment := args[1]
-			argTimestamp, err := strconv.ParseUint(args[2], 10, 64)
-			if err != nil {
-				return err
-			}
-			argBeakId, err := strconv.ParseUint(args[3], 10, 64)
+			argBeakId, err := strconv.ParseUint(args[2], 10, 64)
 			if err != nil {
 				return err
 			}
@@ -39,7 +35,6 @@ func CmdCreateComment() *cobra.Command {
 				clientCtx.GetFromAddress().String(),
 				argName,
 				argComment,
-				argTimestamp,
 				argBeakId,
 			)
 			if err := msg.ValidateBasic(); err != nil {

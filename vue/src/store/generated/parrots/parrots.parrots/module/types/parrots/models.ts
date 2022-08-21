@@ -22,6 +22,7 @@ export interface Beak {
   description: string;
   license: string;
   respect_count: number;
+  created_at: number;
   linked_beaks: number[];
   tags: string[];
 }
@@ -31,7 +32,7 @@ export interface Comment {
   creator: string;
   username: string;
   comment: string;
-  timestamp: number;
+  created_at: number;
   beak_id: number;
 }
 
@@ -211,6 +212,7 @@ const baseBeak: object = {
   description: "",
   license: "",
   respect_count: 0,
+  created_at: 0,
   linked_beaks: 0,
   tags: "",
 };
@@ -241,13 +243,16 @@ export const Beak = {
     if (message.respect_count !== 0) {
       writer.uint32(64).uint64(message.respect_count);
     }
-    writer.uint32(74).fork();
+    if (message.created_at !== 0) {
+      writer.uint32(72).int64(message.created_at);
+    }
+    writer.uint32(82).fork();
     for (const v of message.linked_beaks) {
       writer.uint64(v);
     }
     writer.ldelim();
     for (const v of message.tags) {
-      writer.uint32(82).string(v!);
+      writer.uint32(90).string(v!);
     }
     return writer;
   },
@@ -286,6 +291,9 @@ export const Beak = {
           message.respect_count = longToNumber(reader.uint64() as Long);
           break;
         case 9:
+          message.created_at = longToNumber(reader.int64() as Long);
+          break;
+        case 10:
           if ((tag & 7) === 2) {
             const end2 = reader.uint32() + reader.pos;
             while (reader.pos < end2) {
@@ -295,7 +303,7 @@ export const Beak = {
             message.linked_beaks.push(longToNumber(reader.uint64() as Long));
           }
           break;
-        case 10:
+        case 11:
           message.tags.push(reader.string());
           break;
         default:
@@ -353,6 +361,11 @@ export const Beak = {
     } else {
       message.respect_count = 0;
     }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.created_at = Number(object.created_at);
+    } else {
+      message.created_at = 0;
+    }
     if (object.linked_beaks !== undefined && object.linked_beaks !== null) {
       for (const e of object.linked_beaks) {
         message.linked_beaks.push(Number(e));
@@ -379,6 +392,7 @@ export const Beak = {
     message.license !== undefined && (obj.license = message.license);
     message.respect_count !== undefined &&
       (obj.respect_count = message.respect_count);
+    message.created_at !== undefined && (obj.created_at = message.created_at);
     if (message.linked_beaks) {
       obj.linked_beaks = message.linked_beaks.map((e) => e);
     } else {
@@ -439,6 +453,11 @@ export const Beak = {
     } else {
       message.respect_count = 0;
     }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.created_at = object.created_at;
+    } else {
+      message.created_at = 0;
+    }
     if (object.linked_beaks !== undefined && object.linked_beaks !== null) {
       for (const e of object.linked_beaks) {
         message.linked_beaks.push(e);
@@ -458,7 +477,7 @@ const baseComment: object = {
   creator: "",
   username: "",
   comment: "",
-  timestamp: 0,
+  created_at: 0,
   beak_id: 0,
 };
 
@@ -476,8 +495,8 @@ export const Comment = {
     if (message.comment !== "") {
       writer.uint32(34).string(message.comment);
     }
-    if (message.timestamp !== 0) {
-      writer.uint32(40).uint64(message.timestamp);
+    if (message.created_at !== 0) {
+      writer.uint32(40).int64(message.created_at);
     }
     if (message.beak_id !== 0) {
       writer.uint32(48).uint64(message.beak_id);
@@ -505,7 +524,7 @@ export const Comment = {
           message.comment = reader.string();
           break;
         case 5:
-          message.timestamp = longToNumber(reader.uint64() as Long);
+          message.created_at = longToNumber(reader.int64() as Long);
           break;
         case 6:
           message.beak_id = longToNumber(reader.uint64() as Long);
@@ -540,10 +559,10 @@ export const Comment = {
     } else {
       message.comment = "";
     }
-    if (object.timestamp !== undefined && object.timestamp !== null) {
-      message.timestamp = Number(object.timestamp);
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.created_at = Number(object.created_at);
     } else {
-      message.timestamp = 0;
+      message.created_at = 0;
     }
     if (object.beak_id !== undefined && object.beak_id !== null) {
       message.beak_id = Number(object.beak_id);
@@ -559,7 +578,7 @@ export const Comment = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.username !== undefined && (obj.username = message.username);
     message.comment !== undefined && (obj.comment = message.comment);
-    message.timestamp !== undefined && (obj.timestamp = message.timestamp);
+    message.created_at !== undefined && (obj.created_at = message.created_at);
     message.beak_id !== undefined && (obj.beak_id = message.beak_id);
     return obj;
   },
@@ -586,10 +605,10 @@ export const Comment = {
     } else {
       message.comment = "";
     }
-    if (object.timestamp !== undefined && object.timestamp !== null) {
-      message.timestamp = object.timestamp;
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.created_at = object.created_at;
     } else {
-      message.timestamp = 0;
+      message.created_at = 0;
     }
     if (object.beak_id !== undefined && object.beak_id !== null) {
       message.beak_id = object.beak_id;

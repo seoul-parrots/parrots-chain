@@ -21,6 +21,9 @@ export interface ParrotsBeak {
 
   /** @format uint64 */
   respect_count?: string;
+
+  /** @format int64 */
+  created_at?: string;
   linked_beaks?: string[];
   tags?: string[];
 }
@@ -32,8 +35,8 @@ export interface ParrotsComment {
   username?: string;
   comment?: string;
 
-  /** @format uint64 */
-  timestamp?: string;
+  /** @format int64 */
+  created_at?: string;
 
   /** @format uint64 */
   beak_id?: string;

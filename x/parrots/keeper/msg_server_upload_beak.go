@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"time"
 
 	"parrots/x/parrots/types"
 
@@ -18,6 +19,7 @@ func (k msgServer) UploadBeak(goCtx context.Context, msg *types.MsgUploadBeak) (
 		CreatorUsername: msg.CreatorUsername,
 		Description:     msg.Description,
 		License:         msg.License,
+		CreatedAt:       time.Now().Unix(),
 		Tags:            msg.Tags,
 		LinkedBeaks:     msg.LinkedBeaks,
 	}

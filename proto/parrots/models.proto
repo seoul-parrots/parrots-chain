@@ -21,8 +21,9 @@ message Beak {
     string description = 6;
     string license = 7;
     uint64 respect_count = 8;
-    repeated uint64 linked_beaks = 9;
-    repeated string tags = 10;
+    int64 created_at = 9;
+    repeated uint64 linked_beaks = 10;
+    repeated string tags = 11;
 }
 
 message Comment {
@@ -30,6 +31,6 @@ message Comment {
     string creator = 2;
     string username = 3;
     string comment = 4;
-    uint64 timestamp = 5;
+    int64 created_at = 5;
     uint64 beak_id = 6;
 }

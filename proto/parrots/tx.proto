@@ -53,8 +53,7 @@ message MsgCreateComment {
   string creator = 1;
   string username = 2;
   string comment = 3;
-  uint64 timestamp = 4;
-  uint64 beakId = 5;
+  uint64 beakId = 4;
 }
 
 message MsgCreateCommentResponse {
