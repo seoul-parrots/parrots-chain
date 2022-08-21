@@ -6,7 +6,7 @@ import {
   PageRequest,
   PageResponse,
 } from "../cosmos/base/query/v1beta1/pagination";
-import { Profile, Beak, Comment } from "../parrots/models";
+import { Profile, Beak, Comment, Feed } from "../parrots/models";
 
 export const protobufPackage = "parrots.parrots";
 
@@ -118,6 +118,12 @@ export interface QueryGetCommentsByBeakIdRequest {
 export interface QueryGetCommentsByBeakIdResponse {
   comments: Comment[];
   pagination: PageResponse | undefined;
+}
+
+export interface QueryGetFeedsRequest {}
+
+export interface QueryGetFeedsResponse {
+  feeds: Feed[];
 }
 
 const baseQueryParamsRequest: object = {};
@@ -2082,6 +2088,111 @@ export const QueryGetCommentsByBeakIdResponse = {
   },
 };
 
+const baseQueryGetFeedsRequest: object = {};
+
+export const QueryGetFeedsRequest = {
+  encode(_: QueryGetFeedsRequest, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetFeedsRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetFeedsRequest } as QueryGetFeedsRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryGetFeedsRequest {
+    const message = { ...baseQueryGetFeedsRequest } as QueryGetFeedsRequest;
+    return message;
+  },
+
+  toJSON(_: QueryGetFeedsRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryGetFeedsRequest>): QueryGetFeedsRequest {
+    const message = { ...baseQueryGetFeedsRequest } as QueryGetFeedsRequest;
+    return message;
+  },
+};
+
+const baseQueryGetFeedsResponse: object = {};
+
+export const QueryGetFeedsResponse = {
+  encode(
+    message: QueryGetFeedsResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.feeds) {
+      Feed.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryGetFeedsResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryGetFeedsResponse } as QueryGetFeedsResponse;
+    message.feeds = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.feeds.push(Feed.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetFeedsResponse {
+    const message = { ...baseQueryGetFeedsResponse } as QueryGetFeedsResponse;
+    message.feeds = [];
+    if (object.feeds !== undefined && object.feeds !== null) {
+      for (const e of object.feeds) {
+        message.feeds.push(Feed.fromJSON(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetFeedsResponse): unknown {
+    const obj: any = {};
+    if (message.feeds) {
+      obj.feeds = message.feeds.map((e) => (e ? Feed.toJSON(e) : undefined));
+    } else {
+      obj.feeds = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetFeedsResponse>
+  ): QueryGetFeedsResponse {
+    const message = { ...baseQueryGetFeedsResponse } as QueryGetFeedsResponse;
+    message.feeds = [];
+    if (object.feeds !== undefined && object.feeds !== null) {
+      for (const e of object.feeds) {
+        message.feeds.push(Feed.fromPartial(e));
+      }
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -2132,6 +2243,8 @@ export interface Query {
   GetCommentsByBeakId(
     request: QueryGetCommentsByBeakIdRequest
   ): Promise<QueryGetCommentsByBeakIdResponse>;
+  /** Queries a list of GetFeeds items. */
+  GetFeeds(request: QueryGetFeedsRequest): Promise<QueryGetFeedsResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -2310,6 +2423,14 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryGetCommentsByBeakIdResponse.decode(new Reader(data))
+    );
+  }
+
+  GetFeeds(request: QueryGetFeedsRequest): Promise<QueryGetFeedsResponse> {
+    const data = QueryGetFeedsRequest.encode(request).finish();
+    const promise = this.rpc.request("parrots.parrots.Query", "GetFeeds", data);
+    return promise.then((data) =>
+      QueryGetFeedsResponse.decode(new Reader(data))
     );
   }
 }

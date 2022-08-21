@@ -77,6 +77,11 @@ service Query {
 		option (google.api.http).get = "/parrots/parrots/get_comments_by_beak_id";
 	}
 
+// Queries a list of GetFeeds items.
+	rpc GetFeeds(QueryGetFeedsRequest) returns (QueryGetFeedsResponse) {
+		option (google.api.http).get = "/parrots/parrots/get_feeds";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -190,6 +195,13 @@ message QueryGetCommentsByBeakIdRequest {
 message QueryGetCommentsByBeakIdResponse {
 	repeated Comment comments = 1;
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetFeedsRequest {
+}
+
+message QueryGetFeedsResponse {
+	repeated Feed feeds = 1;
 }
 
 // this line is used by starport scaffolding # 3

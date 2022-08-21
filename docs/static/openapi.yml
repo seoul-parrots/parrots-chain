@@ -30844,6 +30844,49 @@ paths:
           format: uint64
       tags:
         - Query
+  /parrots/parrots/get_feeds:
+    get:
+      summary: Queries a list of GetFeeds items.
+      operationId: ParrotsParrotsGetFeeds
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              feeds:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    id:
+                      type: string
+                      format: uint64
+                    created_at:
+                      type: string
+                      format: int64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /parrots/parrots/get_profile:
     get:
       summary: Queries a list of GetProfile items.
@@ -52748,6 +52791,17 @@ definitions:
       beak_id:
         type: string
         format: uint64
+  parrots.parrots.Feed:
+    type: object
+    properties:
+      type:
+        type: string
+      id:
+        type: string
+        format: uint64
+      created_at:
+        type: string
+        format: int64
   parrots.parrots.MsgCreateCommentResponse:
     type: object
   parrots.parrots.MsgSendRespectResponse:
@@ -53075,6 +53129,22 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  parrots.parrots.QueryGetFeedsResponse:
+    type: object
+    properties:
+      feeds:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+            id:
+              type: string
+              format: uint64
+            created_at:
+              type: string
+              format: int64
   parrots.parrots.QueryGetProfileByCreatorResponse:
     type: object
     properties:

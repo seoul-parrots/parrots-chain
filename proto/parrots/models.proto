@@ -36,3 +36,9 @@ message Comment {
     int64 created_at = 6;
     uint64 beak_id = 7;
 }
+
+message Feed {
+    string type = 1;
+    uint64 id = 2;
+    int64 created_at = 3;
+}

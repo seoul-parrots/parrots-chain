@@ -38,6 +38,12 @@ export interface Comment {
   beak_id: number;
 }
 
+export interface Feed {
+  type: string;
+  id: number;
+  created_at: number;
+}
+
 const baseProfile: object = {
   id: 0,
   creator: "",
@@ -660,6 +666,95 @@ export const Comment = {
       message.beak_id = object.beak_id;
     } else {
       message.beak_id = 0;
+    }
+    return message;
+  },
+};
+
+const baseFeed: object = { type: "", id: 0, created_at: 0 };
+
+export const Feed = {
+  encode(message: Feed, writer: Writer = Writer.create()): Writer {
+    if (message.type !== "") {
+      writer.uint32(10).string(message.type);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.created_at !== 0) {
+      writer.uint32(24).int64(message.created_at);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): Feed {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseFeed } as Feed;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.type = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.created_at = longToNumber(reader.int64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Feed {
+    const message = { ...baseFeed } as Feed;
+    if (object.type !== undefined && object.type !== null) {
+      message.type = String(object.type);
+    } else {
+      message.type = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.created_at = Number(object.created_at);
+    } else {
+      message.created_at = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: Feed): unknown {
+    const obj: any = {};
+    message.type !== undefined && (obj.type = message.type);
+    message.id !== undefined && (obj.id = message.id);
+    message.created_at !== undefined && (obj.created_at = message.created_at);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<Feed>): Feed {
+    const message = { ...baseFeed } as Feed;
+    if (object.type !== undefined && object.type !== null) {
+      message.type = object.type;
+    } else {
+      message.type = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.created_at = object.created_at;
+    } else {
+      message.created_at = 0;
     }
     return message;
   },

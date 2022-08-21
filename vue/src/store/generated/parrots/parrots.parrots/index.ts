@@ -3,10 +3,11 @@ import { txClient, queryClient, MissingWalletError , registry} from './module'
 import { Profile } from "./module/types/parrots/models"
 import { Beak } from "./module/types/parrots/models"
 import { Comment } from "./module/types/parrots/models"
+import { Feed } from "./module/types/parrots/models"
 import { Params } from "./module/types/parrots/params"
 
 
-export { Profile, Beak, Comment, Params };
+export { Profile, Beak, Comment, Feed, Params };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -57,11 +58,13 @@ const getDefaultState = () => {
 				GetRespectedBeaks: {},
 				GetProfileByCreator: {},
 				GetCommentsByBeakId: {},
+				GetFeeds: {},
 				
 				_Structure: {
 						Profile: getStructure(Profile.fromPartial({})),
 						Beak: getStructure(Beak.fromPartial({})),
 						Comment: getStructure(Comment.fromPartial({})),
+						Feed: getStructure(Feed.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						
 		},
@@ -168,6 +171,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.GetCommentsByBeakId[JSON.stringify(params)] ?? {}
+		},
+				getGetFeeds: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.GetFeeds[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -529,6 +538,43 @@ export default {
 		},
 		
 		
+		
+		
+		 		
+		
+		
+		async QueryGetFeeds({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryGetFeeds()).data
+				
+					
+				commit('QUERY', { query: 'GetFeeds', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryGetFeeds', payload: { options: { all }, params: {...key},query }})
+				return getters['getGetFeeds']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryGetFeeds API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		async sendMsgUploadBeak({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgUploadBeak(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUploadBeak:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgUploadBeak:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgCreateComment({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -559,21 +605,6 @@ export default {
 				}
 			}
 		},
-		async sendMsgUploadBeak({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgUploadBeak(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUploadBeak:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgUploadBeak:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgSendRespect({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -590,6 +621,19 @@ export default {
 			}
 		},
 		
+		async MsgUploadBeak({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgUploadBeak(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUploadBeak:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgUploadBeak:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgCreateComment({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -613,19 +657,6 @@ export default {
 					throw new Error('TxClient:MsgSetProfile:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgSetProfile:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgUploadBeak({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgUploadBeak(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUploadBeak:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgUploadBeak:Create Could not create message: ' + e.message)
 				}
 			}
 		},

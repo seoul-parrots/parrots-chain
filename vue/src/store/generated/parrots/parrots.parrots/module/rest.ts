@@ -44,6 +44,16 @@ export interface ParrotsComment {
   beak_id?: string;
 }
 
+export interface ParrotsFeed {
+  type?: string;
+
+  /** @format uint64 */
+  id?: string;
+
+  /** @format int64 */
+  created_at?: string;
+}
+
 export type ParrotsMsgCreateCommentResponse = object;
 
 export type ParrotsMsgSendRespectResponse = object;
@@ -140,6 +150,10 @@ export interface ParrotsQueryGetCommentsByBeakIdResponse {
    *  }
    */
   pagination?: V1Beta1PageResponse;
+}
+
+export interface ParrotsQueryGetFeedsResponse {
+  feeds?: ParrotsFeed[];
 }
 
 export interface ParrotsQueryGetProfileByCreatorResponse {
@@ -596,6 +610,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       path: `/parrots/parrots/get_comments_by_beak_id`,
       method: "GET",
       query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryGetFeeds
+   * @summary Queries a list of GetFeeds items.
+   * @request GET:/parrots/parrots/get_feeds
+   */
+  queryGetFeeds = (params: RequestParams = {}) =>
+    this.request<ParrotsQueryGetFeedsResponse, RpcStatus>({
+      path: `/parrots/parrots/get_feeds`,
+      method: "GET",
       format: "json",
       ...params,
     });
