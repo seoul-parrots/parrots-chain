@@ -25,6 +25,25 @@ npm run serve
 
 The frontend app is built using the `@starport/vue` and `@starport/vuex` packages. For details, see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
 
+## RPCs
+- GetProfiles()
+- GetProfileCount()
+- GetProfile(id)
+- GetProfileByCreator(creator)
+- GetProfileByUsername(username)
+- SetProfile(profile)
+- UploadBeakToFileSystem(FileUpload) → Blockchain 아님
+- UploadBeak(beak)
+- GetBeakCount()
+- GetAllBeaks()
+- GetBeak(id)
+- GetBeaksByNameSubstring(name)
+- GetBeaksByTags(tags)
+- SendRespect(beak_id)
+- GetRespectedBeaks(user_id)
+- CreateComment(beak_id, message)
+- GetCommentsByBeakId(id)
+
 ## Release
 To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
 
