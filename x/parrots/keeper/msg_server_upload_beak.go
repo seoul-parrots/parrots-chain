@@ -13,15 +13,16 @@ func (k msgServer) UploadBeak(goCtx context.Context, msg *types.MsgUploadBeak) (
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	var beak = types.Beak{
-		Creator:         msg.Creator,
-		FileIndex:       msg.FileIndex,
-		Name:            msg.Name,
-		CreatorUsername: msg.CreatorUsername,
-		Description:     msg.Description,
-		License:         msg.License,
-		CreatedAt:       time.Now().Unix(),
-		Tags:            msg.Tags,
-		LinkedBeaks:     msg.LinkedBeaks,
+		Creator:            msg.Creator,
+		FileIndex:          msg.FileIndex,
+		Name:               msg.Name,
+		CreatorUsername:    msg.CreatorUsername,
+		CreatorDisplayName: msg.CreatorDisplayName,
+		Description:        msg.Description,
+		License:            msg.License,
+		CreatedAt:          time.Now().Unix(),
+		Tags:               msg.Tags,
+		LinkedBeaks:        msg.LinkedBeaks,
 	}
 
 	id := k.AddBeak(ctx, beak)

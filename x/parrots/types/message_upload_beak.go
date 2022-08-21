@@ -9,16 +9,17 @@ const TypeMsgUploadBeak = "upload_beak"
 
 var _ sdk.Msg = &MsgUploadBeak{}
 
-func NewMsgUploadBeak(creator string, fileIndex string, name string, creatorUsername string, description string, license string, linkedBeaks []uint64, tags []string) *MsgUploadBeak {
+func NewMsgUploadBeak(creator string, fileIndex string, name string, creatorUsername string, creatorDisplayName string, description string, license string, linkedBeaks []uint64, tags []string) *MsgUploadBeak {
 	return &MsgUploadBeak{
-		Creator:         creator,
-		FileIndex:       fileIndex,
-		Name:            name,
-		CreatorUsername: creatorUsername,
-		Description:     description,
-		License:         license,
-		LinkedBeaks:     linkedBeaks,
-		Tags:            tags,
+		Creator:            creator,
+		FileIndex:          fileIndex,
+		Name:               name,
+		CreatorUsername:    creatorUsername,
+		CreatorDisplayName: creatorDisplayName,
+		Description:        description,
+		License:            license,
+		LinkedBeaks:        linkedBeaks,
+		Tags:               tags,
 	}
 }
 

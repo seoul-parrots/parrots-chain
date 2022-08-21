@@ -13,11 +13,12 @@ func (k msgServer) CreateComment(goCtx context.Context, msg *types.MsgCreateComm
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	var comment = types.Comment{
-		Creator:   msg.Creator,
-		Username:  msg.Username,
-		Comment:   msg.Comment,
-		CreatedAt: time.Now().Unix(),
-		BeakId:    msg.BeakId,
+		Creator:     msg.Creator,
+		Username:    msg.Username,
+		DisplayName: msg.DisplayName,
+		Comment:     msg.Comment,
+		CreatedAt:   time.Now().Unix(),
+		BeakId:      msg.BeakId,
 	}
 
 	k.AddComment(ctx, comment)

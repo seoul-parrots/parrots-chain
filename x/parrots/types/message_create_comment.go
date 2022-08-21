@@ -9,12 +9,13 @@ const TypeMsgCreateComment = "create_comment"
 
 var _ sdk.Msg = &MsgCreateComment{}
 
-func NewMsgCreateComment(creator string, username string, comment string, beakId uint64) *MsgCreateComment {
+func NewMsgCreateComment(creator string, username string, displayName string, comment string, beakId uint64) *MsgCreateComment {
 	return &MsgCreateComment{
-		Creator:  creator,
-		Username: username,
-		Comment:  comment,
-		BeakId:   beakId,
+		Creator:     creator,
+		Username:    username,
+		DisplayName: displayName,
+		Comment:     comment,
+		BeakId:      beakId,
 	}
 }
 

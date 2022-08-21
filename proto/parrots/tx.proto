@@ -30,10 +30,11 @@ message MsgUploadBeak {
   string fileIndex = 2;
   string name = 3;
   string creatorUsername = 4;
-  string description = 5;
-  string license = 6;
-  repeated uint64 linkedBeaks = 7;
-  repeated string tags = 8;
+  string creatorDisplayName = 5;
+  string description = 6;
+  string license = 7;
+  repeated uint64 linkedBeaks = 8;
+  repeated string tags = 9;
 }
 
 message MsgUploadBeakResponse {
@@ -52,8 +53,9 @@ message MsgSendRespectResponse {
 message MsgCreateComment {
   string creator = 1;
   string username = 2;
-  string comment = 3;
-  uint64 beakId = 4;
+  string displayName = 3;
+  string comment = 4;
+  uint64 beakId = 5;
 }
 
 message MsgCreateCommentResponse {

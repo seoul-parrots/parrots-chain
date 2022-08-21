@@ -16,6 +16,7 @@ export interface ParrotsBeak {
   file_index?: string;
   name?: string;
   creator_username?: string;
+  creator_display_name?: string;
   description?: string;
   license?: string;
 
@@ -33,6 +34,7 @@ export interface ParrotsComment {
   id?: string;
   creator?: string;
   username?: string;
+  display_name?: string;
   comment?: string;
 
   /** @format int64 */

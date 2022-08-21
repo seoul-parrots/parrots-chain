@@ -18,19 +18,21 @@ message Beak {
     string file_index = 3;
     string name = 4;
     string creator_username = 5;
-    string description = 6;
-    string license = 7;
-    uint64 respect_count = 8;
-    int64 created_at = 9;
-    repeated uint64 linked_beaks = 10;
-    repeated string tags = 11;
+    string creator_display_name = 6;
+    string description = 7;
+    string license = 8;
+    uint64 respect_count = 9;
+    int64 created_at = 10;
+    repeated uint64 linked_beaks = 11;
+    repeated string tags = 12;
 }
 
 message Comment {
     uint64 id = 1;
     string creator = 2;
     string username = 3;
-    string comment = 4;
-    int64 created_at = 5;
-    uint64 beak_id = 6;
+    string display_name = 4;
+    string comment = 5;
+    int64 created_at = 6;
+    uint64 beak_id = 7;
 }
