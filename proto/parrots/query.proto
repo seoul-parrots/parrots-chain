@@ -82,6 +82,11 @@ service Query {
 		option (google.api.http).get = "/parrots/parrots/get_feeds";
 	}
 
+// Queries a list of GetCommentById items.
+	rpc GetCommentById(QueryGetCommentByIdRequest) returns (QueryGetCommentByIdResponse) {
+		option (google.api.http).get = "/parrots/parrots/get_comment_by_id";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -202,6 +207,14 @@ message QueryGetFeedsRequest {
 
 message QueryGetFeedsResponse {
 	repeated Feed feeds = 1;
+}
+
+message QueryGetCommentByIdRequest {
+	uint64 id = 1;
+}
+
+message QueryGetCommentByIdResponse {
+  	Comment comment = 1;
 }
 
 // this line is used by starport scaffolding # 3

@@ -126,6 +126,14 @@ export interface QueryGetFeedsResponse {
   feeds: Feed[];
 }
 
+export interface QueryGetCommentByIdRequest {
+  id: number;
+}
+
+export interface QueryGetCommentByIdResponse {
+  comment: Comment | undefined;
+}
+
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
@@ -2193,6 +2201,147 @@ export const QueryGetFeedsResponse = {
   },
 };
 
+const baseQueryGetCommentByIdRequest: object = { id: 0 };
+
+export const QueryGetCommentByIdRequest = {
+  encode(
+    message: QueryGetCommentByIdRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetCommentByIdRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetCommentByIdRequest,
+    } as QueryGetCommentByIdRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetCommentByIdRequest {
+    const message = {
+      ...baseQueryGetCommentByIdRequest,
+    } as QueryGetCommentByIdRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetCommentByIdRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetCommentByIdRequest>
+  ): QueryGetCommentByIdRequest {
+    const message = {
+      ...baseQueryGetCommentByIdRequest,
+    } as QueryGetCommentByIdRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetCommentByIdResponse: object = {};
+
+export const QueryGetCommentByIdResponse = {
+  encode(
+    message: QueryGetCommentByIdResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.comment !== undefined) {
+      Comment.encode(message.comment, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetCommentByIdResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetCommentByIdResponse,
+    } as QueryGetCommentByIdResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.comment = Comment.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetCommentByIdResponse {
+    const message = {
+      ...baseQueryGetCommentByIdResponse,
+    } as QueryGetCommentByIdResponse;
+    if (object.comment !== undefined && object.comment !== null) {
+      message.comment = Comment.fromJSON(object.comment);
+    } else {
+      message.comment = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetCommentByIdResponse): unknown {
+    const obj: any = {};
+    message.comment !== undefined &&
+      (obj.comment = message.comment
+        ? Comment.toJSON(message.comment)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetCommentByIdResponse>
+  ): QueryGetCommentByIdResponse {
+    const message = {
+      ...baseQueryGetCommentByIdResponse,
+    } as QueryGetCommentByIdResponse;
+    if (object.comment !== undefined && object.comment !== null) {
+      message.comment = Comment.fromPartial(object.comment);
+    } else {
+      message.comment = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -2245,6 +2394,10 @@ export interface Query {
   ): Promise<QueryGetCommentsByBeakIdResponse>;
   /** Queries a list of GetFeeds items. */
   GetFeeds(request: QueryGetFeedsRequest): Promise<QueryGetFeedsResponse>;
+  /** Queries a list of GetCommentById items. */
+  GetCommentById(
+    request: QueryGetCommentByIdRequest
+  ): Promise<QueryGetCommentByIdResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -2431,6 +2584,20 @@ export class QueryClientImpl implements Query {
     const promise = this.rpc.request("parrots.parrots.Query", "GetFeeds", data);
     return promise.then((data) =>
       QueryGetFeedsResponse.decode(new Reader(data))
+    );
+  }
+
+  GetCommentById(
+    request: QueryGetCommentByIdRequest
+  ): Promise<QueryGetCommentByIdResponse> {
+    const data = QueryGetCommentByIdRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "parrots.parrots.Query",
+      "GetCommentById",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetCommentByIdResponse.decode(new Reader(data))
     );
   }
 }

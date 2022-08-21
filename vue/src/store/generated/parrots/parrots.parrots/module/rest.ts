@@ -137,6 +137,10 @@ export interface ParrotsQueryGetBeaksCountResponse {
   count?: string;
 }
 
+export interface ParrotsQueryGetCommentByIdResponse {
+  comment?: ParrotsComment;
+}
+
 export interface ParrotsQueryGetCommentsByBeakIdResponse {
   comments?: ParrotsComment[];
 
@@ -590,6 +594,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     this.request<ParrotsQueryGetBeaksCountResponse, RpcStatus>({
       path: `/parrots/parrots/get_beaks_count`,
       method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryGetCommentById
+   * @summary Queries a list of GetCommentById items.
+   * @request GET:/parrots/parrots/get_comment_by_id
+   */
+  queryGetCommentById = (query?: { id?: string }, params: RequestParams = {}) =>
+    this.request<ParrotsQueryGetCommentByIdResponse, RpcStatus>({
+      path: `/parrots/parrots/get_comment_by_id`,
+      method: "GET",
+      query: query,
       format: "json",
       ...params,
     });
