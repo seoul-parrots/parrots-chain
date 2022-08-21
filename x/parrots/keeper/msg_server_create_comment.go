@@ -17,7 +17,7 @@ func (k msgServer) CreateComment(goCtx context.Context, msg *types.MsgCreateComm
 		Username:    msg.Username,
 		DisplayName: msg.DisplayName,
 		Comment:     msg.Comment,
-		CreatedAt:   time.Now().Unix(),
+		CreatedAt:   time.Now().UnixMilli(),
 		BeakId:      msg.BeakId,
 	}
 

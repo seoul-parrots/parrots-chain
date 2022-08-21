@@ -20,7 +20,7 @@ func (k msgServer) UploadBeak(goCtx context.Context, msg *types.MsgUploadBeak) (
 		CreatorDisplayName: msg.CreatorDisplayName,
 		Description:        msg.Description,
 		License:            msg.License,
-		CreatedAt:          time.Now().Unix(),
+		CreatedAt:          time.Now().UnixMilli(),
 		Tags:               msg.Tags,
 		LinkedBeaks:        msg.LinkedBeaks,
 	}
